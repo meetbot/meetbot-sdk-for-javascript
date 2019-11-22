@@ -1,0 +1,8 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "target": "es5"
+    },
+    "include": ["src", "typings"],
+    "exclude": ["node_modules", "dist", "build"]
+}

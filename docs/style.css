@@ -1,0 +1,46 @@
+html, body, #app {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+body {
+    padding: 20px 40px;
+}
+
+code {
+    font-size: 14px;
+    color: rgba(0,0,0,.8);
+    background-color: rgba(0,0,0,.15);
+    padding: 2px 3px;
+    margin: 0 1px;
+    border-radius: 4px;
+}
+
+pre {
+    padding: 1em;
+    border: none;
+    overflow: auto;
+    line-height: 1.45;
+    max-height: 35em;
+    position: relative;
+    background: #F6F6F6;
+    -moz-background-size: 30px,30px;
+    -o-background-size: 30px,30px;
+    -webkit-background-size: 30px,30px;
+    background-size: 30px,30px;
+}
+
+.bothub-widget-header {
+    font-size: 20px;
+    line-height: 36px;
+    padding: 0 6px;
+    color: #303133;
+    border-bottom: 1px solid #ccc;
+}
+
+.bothub-widget-article {
+    margin-top: 30px;
+    padding-bottom: 80px;
+}
