@@ -14,7 +14,7 @@ interface Environment {
 }
 
 export const uat: Environment = {
-    messenger_app_id: 418557695509853,
+    messenger_app_id: 611599205958417,
     api_server: 'https://api.uat.bothub.ai/',
     sdk_href: 'https://storage.googleapis.com/bothub-uat-sdk/dist/sdk-2-latest.js',
     storage: {
@@ -26,7 +26,7 @@ export const uat: Environment = {
 
 export const prod: Environment = {
     messenger_app_id: 418557695509853,
-    api_server: 'https://t.meetbot.biz',
+    api_server: 'https://t.meetbot.biz/',
     sdk_href: 'https://meetbot.oss-cn-hongkong.aliyuncs.com/sdk/sdk-2-latest.js',
     storage: {
         projectId: 'bothub-1340',
