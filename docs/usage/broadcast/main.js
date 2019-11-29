@@ -132,5 +132,6 @@ new Vue ({
     },
     created() {
         this.userId = localStorage.bothub_custom_user_id;
+        this.userId = window.BH.User.getCustomUserId();
     },
 });
