@@ -41,7 +41,7 @@ mkcert local-fe.bothub.ai localhost 127.0.0.1
 
 ## 使用说明及预览
 
-插件使用说明以及预览请见：[插件预览](https://meetbot.github.io/bothub-sdk-for-javascript/)
+插件使用说明以及预览请见：[插件预览](https://meetbot.github.io/meetbot-sdk-for-javascript/)
 
 ## API 文档
 
