@@ -97,7 +97,7 @@ new Vue ({
 
             axios.defaults.headers.common['Content-Type'] = 'application/json'
             axios.defaults.headers.common['APIKEY'] = 'iZVK6QN44LZOxToBlXuEIWNqBZc4GURxXI5OjUNOrpKuu2x56HxAvuxaByBHFu61';
-            axios.post('https://api.meetbot.biz/api', receipt)
+            axios.post('https://www-bothub-ai.meetsocial.cn:6443/api', receipt)
                 .then(() => alert('发送成功'))
                 .catch(() => alert('发送失败'))
         },

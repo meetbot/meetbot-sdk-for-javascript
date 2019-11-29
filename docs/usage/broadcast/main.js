@@ -17,7 +17,7 @@ new Vue ({
                 "request": {
                     "method": "send_template",
                     "id": "test_" + Math.random().toString(36).substr(2),
-                    "page_id": "165848657371902",
+                    "page_id": "109450183834623",
                     "template_name": "Order Receipt Push"
                 },
                 "recipient": {
@@ -93,8 +93,8 @@ new Vue ({
             };
 
             axios.defaults.headers.common['Content-Type'] = 'application/json'
-            axios.defaults.headers.common['APIKEY'] = 'bQgZ0WQ44uA4wgphwMG0S6ZUlaEmeIzRbl8AtzDdcer87qt0SrA0o3M1LHUmKar7';
-            axios.post('https://www-bothub-ai.meetsocial.cn:6443/', receipt)
+            axios.defaults.headers.common['APIKEY'] = 'iZVK6QN44LZOxToBlXuEIWNqBZc4GURxXI5OjUNOrpKuu2x56HxAvuxaByBHFu61';
+            axios.post('https://www-bothub-ai.meetsocial.cn:6443/api', receipt)
                 .then(() => alert('发送成功'))
                 .catch(() => alert('发送失败'))
         },
@@ -107,7 +107,7 @@ new Vue ({
                 "request": {
                     "method": "send_template",
                     "id": "test_" + Math.random().toString(36).substr(2),
-                    "page_id": "165848657371902",
+                    "page_id": "109450183834623",
                     "template_name": "Shipping Status Update Push"
                 },
                 "recipient": {
@@ -124,8 +124,8 @@ new Vue ({
             };
 
             axios.defaults.headers.common['Content-Type'] = 'application/json'
-            axios.defaults.headers.common['APIKEY'] = 'bQgZ0WQ44uA4wgphwMG0S6ZUlaEmeIzRbl8AtzDdcer87qt0SrA0o3M1LHUmKar7';
-            axios.post('https://www-bothub-ai.meetsocial.cn:6443/', data)
+            axios.defaults.headers.common['APIKEY'] = 'iZVK6QN44LZOxToBlXuEIWNqBZc4GURxXI5OjUNOrpKuu2x56HxAvuxaByBHFu61';
+            axios.post('https://www-bothub-ai.meetsocial.cn:6443/api', data)
                 .then(() => alert('发送成功'))
                 .catch(() => alert('发送失败'))
         },
