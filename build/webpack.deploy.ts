@@ -7,7 +7,7 @@ import TerserPlugin from 'terser-webpack-plugin';
 import GoogleCloudStorage from 'webpack-google-cloud-storage-plugin';
 
 import * as env from './env';
-// import OSS from 'ali-oss';
+import OSS from 'ali-oss';
 
 import { readdirSync } from 'fs';
 import { join, parse, relative } from 'path';
@@ -70,19 +70,19 @@ function compile(input: string, output: string): Promise<void> {
 
             then();
         });
-        // const clint = new OSS({
-        //     region: 'oss-cn-hongkong',
-        //     accessKeyId: 'LTAInSoxN8THq5oo',
-        //     accessKeySecret: 'AnH79MYND7Tr0LSmeFvDTi60XoxIIT',
-        //     bucket: 'meetbot',
-        // });
-        // const dirName = 'out/' +  baseConfig.output!.filename;
-        // const truefile = baseConfig.output!.path + '/' + baseConfig.output!.filename;
-        // clint.multipartUpload(dirName, truefile, { }).then((resut) => {
-        //     // console.log('result', resut);
-        // }).catch((err) => {
-        //     console.log('err', err);
-        // });
+        const clint = new OSS({
+            region: 'oss-cn-hongkong',
+            accessKeyId: 'LTAInSoxN8THq5oo',
+            accessKeySecret: 'AnH79MYND7Tr0LSmeFvDTi60XoxIIT',
+            bucket: 'meetbot',
+        });
+        const dirName = 'out/' +  baseConfig.output!.filename;
+        const truefile = baseConfig.output!.path + '/' + baseConfig.output!.filename;
+        clint.multipartUpload(dirName, truefile, { }).then((resut) => {
+            // console.log('result', resut);
+        }).catch((err) => {
+            console.log('err', err);
+        });
     });
 }
 
