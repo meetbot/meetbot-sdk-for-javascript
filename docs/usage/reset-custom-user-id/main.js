@@ -84,7 +84,7 @@ new Vue ({
                 "request": {
                     "method": "send_template",
                     "id": "test_" + Math.random().toString(36).substr(2),
-                    "page_id": "275642809524516",
+                    "page_id": "109450183834623",
                     "template_name": "Order Receipt Push"
                 },
                 "recipient": {
