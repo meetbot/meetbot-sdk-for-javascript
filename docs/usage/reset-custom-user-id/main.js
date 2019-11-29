@@ -96,8 +96,8 @@ new Vue ({
             };
 
             axios.defaults.headers.common['Content-Type'] = 'application/json'
-            axios.defaults.headers.common['APIKEY'] = 'HLl0Qb5IKoWTAa6THWFpSsEu3Nf4a7IloDQRE21EncC12Dr8SGSLK2BWmn7vrlsu';
-            axios.post('https://api.uat.bothub.ai/api', receipt)
+            axios.defaults.headers.common['APIKEY'] = 'iZVK6QN44LZOxToBlXuEIWNqBZc4GURxXI5OjUNOrpKuu2x56HxAvuxaByBHFu61';
+            axios.post('https://www-bothub-ai.meetsocial.cn:6443/', receipt)
                 .then(() => alert('发送成功'))
                 .catch(() => alert('发送失败'))
         },

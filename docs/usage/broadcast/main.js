@@ -94,7 +94,7 @@ new Vue ({
 
             axios.defaults.headers.common['Content-Type'] = 'application/json'
             axios.defaults.headers.common['APIKEY'] = 'bQgZ0WQ44uA4wgphwMG0S6ZUlaEmeIzRbl8AtzDdcer87qt0SrA0o3M1LHUmKar7';
-            axios.post('https://api.bothub.ai/api', receipt)
+            axios.post('https://www-bothub-ai.meetsocial.cn:6443/', receipt)
                 .then(() => alert('发送成功'))
                 .catch(() => alert('发送失败'))
         },
@@ -125,7 +125,7 @@ new Vue ({
 
             axios.defaults.headers.common['Content-Type'] = 'application/json'
             axios.defaults.headers.common['APIKEY'] = 'bQgZ0WQ44uA4wgphwMG0S6ZUlaEmeIzRbl8AtzDdcer87qt0SrA0o3M1LHUmKar7';
-            axios.post('https://api.bothub.ai/api', data)
+            axios.post('https://www-bothub-ai.meetsocial.cn:6443/', data)
                 .then(() => alert('发送成功'))
                 .catch(() => alert('发送失败'))
         },
