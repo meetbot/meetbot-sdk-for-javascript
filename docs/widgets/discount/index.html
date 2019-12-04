@@ -16,62 +16,62 @@
 </head>
 <body>
     <div id="app">
-        <header class="bothub-widget-header">Discount 插件说明</header>
-        <article class="bothub-widget-article">
+        <header class="meetbot-widget-header">Discount 插件说明</header>
+        <article class="meetbot-widget-article">
             <!-- 说明 -->
-            <section class="bothub-widget-discription">
-                <li class="bothub-widget-discription__item">
+            <section class="meetbot-widget-discription">
+                <li class="meetbot-widget-discription__item">
                     <code>id</code>
                     <p>这是有 Meetbot 自动生成的编号，你需要将带有此编号的元素放入您的网页中，SDK 将会自动将其按照配置渲染成为对应的插件。</p>
                 </li>
-                <li class="bothub-widget-discription__item">
+                <li class="meetbot-widget-discription__item">
                     <code>type</code>
                     <p>这是一个固定的值<code>Discount</code>，表示此插件的类型。</p>
                 </li>
-                <li class="bothub-widget-discription__item">
+                <li class="meetbot-widget-discription__item">
                     <code>pageId</code>
                     <p>Facebook 页面 ID，表示您的 Bot 所连接的 Facebook 页面的编号。</p>
                 </li>
-                <li class="bothub-widget-discription__item">
+                <li class="meetbot-widget-discription__item">
                     <code>origin</code>
                     <p>插件加载网址的基域，必填。</p>
                     <p>指示插件在哪个网站加载，如果不填该项，插件将会无法显示。</p>
                     <p>在这里我们将其写死成当前网页，作为展示用。</p>
                 </li>
-                <li class="bothub-widget-discription__item">
+                <li class="meetbot-widget-discription__item">
                     <code>title</code>
                     <p>优惠券标题</p>
                 </li>
-                <li class="bothub-widget-discription__item">
+                <li class="meetbot-widget-discription__item">
                     <code>subtitle</code>
                     <p>优惠券副标题</p>
                 </li>
-                <li class="bothub-widget-discription__item">
+                <li class="meetbot-widget-discription__item">
                     <code>discountText</code>
                     <p>折扣优惠码的提示文本</p>
                 </li>
-                <li class="bothub-widget-discription__item">
+                <li class="meetbot-widget-discription__item">
                     <code>discountCode</code>
                     <p>折扣优惠码</p>
                 </li>
-                <li class="bothub-widget-discription__item">
+                <li class="meetbot-widget-discription__item">
                     <code>showCodeBtnText</code>
                     <p>折扣按钮文本</p>
                 </li>
-                <li class="bothub-widget-discription__item">
+                <li class="meetbot-widget-discription__item">
                     <code>copyCodeBtnText</code>
                     <p>复制按钮文本</p>
                 </li>
-                <li class="bothub-widget-discription__item">
+                <li class="meetbot-widget-discription__item">
                     <code>discount</code>
                     <p>折扣</p>
                 </li>
-                <li class="bothub-widget-discription__item">
+                <li class="meetbot-widget-discription__item">
                     <code>hideAfterChecked</code>
                     <p>用户勾选确认后多少天内自动隐藏，选填。</p>
                     <p>默认<code>不启用</code>此功能。</p>
                 </li>
-                <li class="bothub-widget-discription__item">
+                <li class="meetbot-widget-discription__item">
                     <code>align</code>
                     <p>插件对齐方式，选填。</p>
                     <p>默认为<code>居中</code>。</p>
@@ -79,23 +79,23 @@
             </section>
             <!-- 预览 -->
             <section>
-                <div class="bothub-widget-card" style="width: 400px">
-                    <header class="bothub-widget-card__header">
+                <div class="meetbot-widget-card" style="width: 400px">
+                    <header class="meetbot-widget-card__header">
                         <span>预览</span>
                         <span>
                             <!-- <el-button size="small" type="primary" @click="clearStorage">清除“勾选后隐藏”</el-button> -->
                             <el-button size="small" type="primary" @click="parseWidget">刷新插件</el-button>
                         </span>
                     </header>
-                    <article class="bothub-widget-card__article">
-                        <el-row :gutter="10" class="bothub-widget-card__input">
-                            <el-col :span="10" class="bothub-widget-card__input-label">插件加载网址的基域</el-col>
+                    <article class="meetbot-widget-card__article">
+                        <el-row :gutter="10" class="meetbot-widget-card__input">
+                            <el-col :span="10" class="meetbot-widget-card__input-label">插件加载网址的基域</el-col>
                             <el-col :span="14">
                                 <el-input :value="location.origin" disabled></el-input>
                             </el-col>
                         </el-row>
-                        <el-row :gutter="10" class="bothub-widget-card__input">
-                            <el-col :span="10" class="bothub-widget-card__input-label">标题</el-col>
+                        <el-row :gutter="10" class="meetbot-widget-card__input">
+                            <el-col :span="10" class="meetbot-widget-card__input-label">标题</el-col>
                             <el-col :span="14">
                                 <el-input
                                     v-model="config.title"
@@ -104,8 +104,8 @@
                                 </el-input>
                             </el-col>
                         </el-row>
-                        <el-row :gutter="10" class="bothub-widget-card__input">
-                            <el-col :span="10" class="bothub-widget-card__input-label">副标题</el-col>
+                        <el-row :gutter="10" class="meetbot-widget-card__input">
+                            <el-col :span="10" class="meetbot-widget-card__input-label">副标题</el-col>
                             <el-col :span="14">
                                 <el-input
                                     v-model="config.subtitle"
@@ -114,8 +114,8 @@
                                 </el-input>
                             </el-col>
                         </el-row>
-                        <el-row :gutter="10" class="bothub-widget-card__input">
-                            <el-col :span="10" class="bothub-widget-card__input-label">折扣优惠码的提示文本</el-col>
+                        <el-row :gutter="10" class="meetbot-widget-card__input">
+                            <el-col :span="10" class="meetbot-widget-card__input-label">折扣优惠码的提示文本</el-col>
                             <el-col :span="14">
                                 <el-input
                                     v-model="config.discountText"
@@ -124,8 +124,8 @@
                                 </el-input>
                             </el-col>
                         </el-row>
-                        <el-row :gutter="10" class="bothub-widget-card__input">
-                            <el-col :span="10" class="bothub-widget-card__input-label">折扣的优惠码</el-col>
+                        <el-row :gutter="10" class="meetbot-widget-card__input">
+                            <el-col :span="10" class="meetbot-widget-card__input-label">折扣的优惠码</el-col>
                             <el-col :span="14">
                                 <el-input
                                     v-model="config.discountCode"
@@ -134,8 +134,8 @@
                                 </el-input>
                             </el-col>
                         </el-row>
-                        <el-row :gutter="10" class="bothub-widget-card__input">
-                            <el-col :span="10" class="bothub-widget-card__input-label">折扣按钮文本</el-col>
+                        <el-row :gutter="10" class="meetbot-widget-card__input">
+                            <el-col :span="10" class="meetbot-widget-card__input-label">折扣按钮文本</el-col>
                             <el-col :span="14">
                                 <el-input
                                     v-model="config.showCodeBtnText"
@@ -144,8 +144,8 @@
                                 </el-input>
                             </el-col>
                         </el-row>
-                        <el-row :gutter="10" class="bothub-widget-card__input">
-                            <el-col :span="10" class="bothub-widget-card__input-label">复制按钮文本</el-col>
+                        <el-row :gutter="10" class="meetbot-widget-card__input">
+                            <el-col :span="10" class="meetbot-widget-card__input-label">复制按钮文本</el-col>
                             <el-col :span="14">
                                 <el-input
                                     v-model="config.copyCodeBtnText"
@@ -154,8 +154,8 @@
                                 </el-input>
                             </el-col>
                         </el-row>
-                        <el-row :gutter="10" class="bothub-widget-card__input">
-                            <el-col :span="10" class="bothub-widget-card__input-label">折扣数量</el-col>
+                        <el-row :gutter="10" class="meetbot-widget-card__input">
+                            <el-col :span="10" class="meetbot-widget-card__input-label">折扣数量</el-col>
                             <el-col :span="14">
                                 <el-input
                                     v-model="config.discount"
@@ -164,8 +164,8 @@
                                 </el-input>
                             </el-col>
                         </el-row>
-                        <el-row :gutter="10" class="bothub-widget-card__input">
-                            <el-col :span="10" class="bothub-widget-card__input-label">选中后隐藏 (选填)</el-col>
+                        <el-row :gutter="10" class="meetbot-widget-card__input">
+                            <el-col :span="10" class="meetbot-widget-card__input-label">选中后隐藏 (选填)</el-col>
                             <el-col :span="14">
                                 <el-select
                                     v-model="config.hideAfterChecked"
@@ -176,8 +176,8 @@
                                 </el-select>
                             </el-col>
                         </el-row>
-                        <el-row :gutter="10" class="bothub-widget-card__input">
-                            <el-col :span="10" class="bothub-widget-card__input-label">对齐方式 (选填)</el-col>
+                        <el-row :gutter="10" class="meetbot-widget-card__input">
+                            <el-col :span="10" class="meetbot-widget-card__input-label">对齐方式 (选填)</el-col>
                             <el-col :span="14">
                                 <el-select
                                     v-model="config.align"
@@ -190,12 +190,12 @@
                             </el-col>
                         </el-row>
                         <pre
-                            class="bothub-widget-card__code"
+                            class="meetbot-widget-card__code"
                             v-text="toStringify()">
                         </pre>
                     </article>
                     <footer
-                        class="bothub-widget-card__footer bothub-widget-preview"
+                        class="meetbot-widget-card__footer meetbot-widget-preview"
                         style="justify-content: flex-start;">
                         <div :id="config.id"></div>
                     </footer>

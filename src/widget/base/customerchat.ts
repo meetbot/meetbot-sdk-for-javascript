@@ -37,7 +37,7 @@ export interface CustomerchatData extends WidgetDataCommon {
 export type FbCustomerchatAttrs = Omit<CustomerchatData, 'id' | 'type'>;
 
 const fbClass = 'fb-customerchat';
-const bhClass = 'bothub-customerchat';
+const bhClass = 'meetbot-customerchat';
 const domSelector = 'div.fb_dialog[class*=fb_customer_chat]';
 
 /**

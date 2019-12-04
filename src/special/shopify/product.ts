@@ -95,11 +95,11 @@ function initCheckbox(config: NonNullable<typeof Config.recall>) {
 
     window.BH.Widget.setConfig(data);
 
-    let dom: Element | undefined = document.getElementById('bothub-shopify-checkbox-wrapper') || undefined;
+    let dom: Element | undefined = document.getElementById('meetbot-shopify-checkbox-wrapper') || undefined;
 
     if (!dom) {
         dom = insertDomAfterForm((width) => (
-            `<div id="bothub-shopify-checkbox-wrapper" style="display: flex; justify-content: center; flex-direction: column; width: ${width}px">` +
+            `<div id="meetbot-shopify-checkbox-wrapper" style="display: flex; justify-content: center; flex-direction: column; width: ${width}px">` +
                 `<div style="text-align: center;" id="${data.id}"></div>` +
                 '<div style="text-align: center;"></div>' +
             '</div>'

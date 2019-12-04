@@ -6,7 +6,7 @@ new Vue ({
     }),
     methods: {
         setUserId() {
-            localStorage.bothub_custom_user_id = this.userId;
+            localStorage.meetbot_custom_user_id = this.userId;
         },
         sendReceipt() {
             if (!this.testUserId) {
@@ -131,7 +131,7 @@ new Vue ({
         },
     },
     created() {
-        this.userId = localStorage.bothub_custom_user_id;
+        this.userId = localStorage.meetbot_custom_user_id;
         this.userId = window.BH.User.getCustomUserId();
     },
 });

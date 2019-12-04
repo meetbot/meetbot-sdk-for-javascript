@@ -1,14 +1,14 @@
-import { BothubParameter, transformParameter, logEvent } from './core';
+import { MeetbotParameter, transformParameter, logEvent } from './core';
 import { facebookReady } from 'src/lib/facebook';
 
 /** 添加至购物车事件参数 */
 interface AddedToCartParams {
     /** 商品编号 */
-    sku: BothubParameter['id'];
+    sku: MeetbotParameter['id'];
     /** 商品名称 */
-    name: BothubParameter['type'];
+    name: MeetbotParameter['type'];
     /** 商品货币单位 */
-    currency: BothubParameter['currency'];
+    currency: MeetbotParameter['currency'];
     /** 商品价格 */
     price: string;
 
@@ -31,11 +31,11 @@ export function addedToCart(param?: AddedToCartParams) {
 /** 添加至愿望单事件参数 */
 interface AddedToWishlistParams {
     /** 商品编号 */
-    sku: BothubParameter['id'];
+    sku: MeetbotParameter['id'];
     /** 商品名称 */
-    name: BothubParameter['type'];
+    name: MeetbotParameter['type'];
     /** 商品货币单位 */
-    currency: BothubParameter['currency'];
+    currency: MeetbotParameter['currency'];
     /** 商品价格 */
     price: string;
 
@@ -56,17 +56,17 @@ export function addedToWishlist(param?: AddedToWishlistParams) {
 }
 
 /** 购物车结算事件参数 */
-interface InitiatedCheckoutParams extends Pick<BothubParameter, 'id' | 'type' | 'currency' | 'numItems' | 'paymentAvailable'> {
+interface InitiatedCheckoutParams extends Pick<MeetbotParameter, 'id' | 'type' | 'currency' | 'numItems' | 'paymentAvailable'> {
     /** 商品编号 */
-    sku: BothubParameter['id'];
+    sku: MeetbotParameter['id'];
     /** 商品名称 */
-    name: BothubParameter['type'];
+    name: MeetbotParameter['type'];
     /** 商品货币单位 */
-    currency: BothubParameter['currency'];
+    currency: MeetbotParameter['currency'];
     /** 商品数量 */
-    quantity: BothubParameter['numItems'];
+    quantity: MeetbotParameter['numItems'];
     /** 商品是否处于可以付款的状态 */
-    availablity: BothubParameter['paymentAvailable'];
+    availablity: MeetbotParameter['paymentAvailable'];
     /** 购物车结算总价格 */
     totalPrice: string;
 

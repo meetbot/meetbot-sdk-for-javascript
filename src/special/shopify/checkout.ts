@@ -1,7 +1,7 @@
 import { fixUrl, Config } from './utils';
 
-/** bothub 订单回执数据结构 */
-interface BothubReceiptData {
+/** meetbot 订单回执数据结构 */
+interface MeetbotReceiptData {
     /** 收货人姓名 */
     recipient_name: string;
     /** 订单号 */
@@ -90,7 +90,7 @@ function getReceiptData() {
         discount,
     } = order;
 
-    const data: BothubReceiptData = {
+    const data: MeetbotReceiptData = {
         recipient_name: `${shipping.first_name} ${shipping.last_name}`,
         order_number: String(order.order_id),
         currency: order.currency,

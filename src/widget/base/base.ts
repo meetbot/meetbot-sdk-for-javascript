@@ -11,7 +11,7 @@ import { WidgetType, ComponentType, HiddenKey, HiddenData } from '../helper';
 import EventController from 'src/lib/event';
 
 /** 包装 DOM 的 class 名称 */
-export const WarpperClassName = 'bothub-widget-wrapper';
+export const WarpperClassName = 'meetbot-widget-wrapper';
 
 /** 插件数据公共接口 */
 export interface WidgetDataCommon {
@@ -82,7 +82,7 @@ export abstract class BaseWidget<T extends WidgetDataCommon = WidgetDataCommon> 
     get name() {
         return WidgetType[this.type];
     }
-    /** 插件元素在 bothub 的编号 */
+    /** 插件元素在 meetbot 的编号 */
     get code() {
         return getCodeFromId(this.id);
     }

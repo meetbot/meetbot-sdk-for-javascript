@@ -1,6 +1,6 @@
 # 聊天插件
 
-[使用预览](https://meetbot.github.io/bothub-sdk-for-javascript/widgets/send-to-messenger/)
+[使用预览](https://meetbot.github.io/meetbot-sdk-for-javascript/widgets/send-to-messenger/)
 
 ## 使用说明
 要保证此插件的正确渲染，请确保插件加载的网站的域名在您的 Facebook 页面白名单内。

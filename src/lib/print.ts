@@ -1,7 +1,7 @@
 import { getQueryString } from 'src/lib/http';
 
 const prefix = '(Meetbot SDK)';
-const debug = getQueryString('bothubDebugMode') === 'true';
+const debug = getQueryString('meetbotDebugMode') === 'true';
 
 /**
  * 控制台中输出`info`日志

@@ -30,7 +30,7 @@
         
         <section>
             <h3>2. 用户触发自定义事件会将 custom_user_id 与 facebook 账号进行绑定: </h3>
-            <div id="bothub-widget-jhk"></div>
+            <div id="meetbot-widget-jhk"></div>
             <div>
                 <span>勾选上方 checkbox 后点击按钮进行绑定：</span>
                 <el-button type="primary" @click="window.BH.Event.logEvent('bind_fb_to_cid')">绑定</el-button>
@@ -38,7 +38,7 @@
         </section>
 
         <section>
-            <h3>3. 完成账户绑定后，即可调用 BOTHUB API 向用户推送订单及物流信息</h3>
+            <h3>3. 完成账户绑定后，即可调用 MEETBOT API 向用户推送订单及物流信息</h3>
             <el-input style="width: 400px;" v-model="testUserId" placeholder="请填写要测试的 custom_user_id" ></el-input>
             <el-button type="primary" @click="sendReceipt">发送订单回执</el-button>
             <el-button type="primary" @click="sendShippingStatus">发送物流更新</el-button>

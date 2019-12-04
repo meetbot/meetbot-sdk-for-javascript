@@ -33,7 +33,7 @@ npm run deploy <mode>
 mkcert -install
 
 # 生成域名证书
-mkcert local-fe.bothub.ai localhost 127.0.0.1
+mkcert local-fe.meetbot.biz localhost 127.0.0.1
 ```
 
 ### 代码上传

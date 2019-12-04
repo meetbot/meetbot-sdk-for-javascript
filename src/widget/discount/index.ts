@@ -52,7 +52,7 @@ export default class Discount extends BaseWidget<DiscountData> {
 
     /** 内部 checkbox 编号 */
     get checkboxId() {
-        return `bothub-discount-inside-checkbox-${this.code}`;
+        return `meetbot-discount-inside-checkbox-${this.code}`;
     }
     /** 当前是否已经勾选 */
     get isChecked() {

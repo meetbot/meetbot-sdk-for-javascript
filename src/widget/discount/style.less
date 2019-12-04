@@ -1,35 +1,35 @@
-.bothub-widget-discount {
+.meetbot-widget-discount {
     @Width: 300px;
     @Radius: 6px;
 
     width: @Width;
     margin: 6px auto;
 
-    &.bothub-widget-discount__left {
+    &.meetbot-widget-discount__left {
         margin-left: 0;
     }
 
-    &.bothub-widget-discount__right {
+    &.meetbot-widget-discount__right {
         margin-right: 0;
     }
 
-    .bothub-widget-discount__header {
+    .meetbot-widget-discount__header {
         text-align: center;
 
-        .bothub-widget-discount__title {
+        .meetbot-widget-discount__title {
             font-size: 18px;
             line-height: 20px;
             color: #444;
         }
 
-        .bothub-widget-discount__subtitle {
+        .meetbot-widget-discount__subtitle {
             font-size: 14px;
             line-height: 16px;
             color: #666;
         }
     }
     
-    .bothub-widget-discount__box {
+    .meetbot-widget-discount__box {
         display: flex;
         border-radius: @Radius;
         overflow: hidden;
@@ -39,7 +39,7 @@
         margin: 8px 0;
     }
 
-    .bothub-widget-discount__tip {
+    .meetbot-widget-discount__tip {
         display: inline-flex;
         flex-direction: column;
         justify-content: center;
@@ -53,18 +53,18 @@
 
         font-weight: bold;
 
-        .bothub-widget-discount__notice {
+        .meetbot-widget-discount__notice {
             font-size: 24px;
             line-height: 26px;
         }
 
-        .bothub-widget-discount__msg {
+        .meetbot-widget-discount__msg {
             font-size: 14px;
             line-height: 16px;
         }
     }
 
-    .bothub-widget-discount__content {
+    .meetbot-widget-discount__content {
         position: relative;
         border: 2px solid #C0CCDA;
         border-left: none;
@@ -76,12 +76,12 @@
         justify-content: center;
         align-items: center;
 
-        .bothub-widget-discount__content-text {
+        .meetbot-widget-discount__content-text {
             color: #2DCE8E;
             font-size: 16px;
         }
 
-        .bothub-widget-discount__content-code {
+        .meetbot-widget-discount__content-code {
             width: 80%;
             color: #2DCE8E;
             font-size: 14px;
@@ -92,7 +92,7 @@
         }
     }
 
-    .bothub-widget-discount__btn {
+    .meetbot-widget-discount__btn {
         width: @Width;
         font-size: 15px;
         background-color: #EFEFEF;
@@ -114,8 +114,8 @@
         }
     }
 
-    .bothub-widget-discount__btn .bothub-widget-loading,
-    .bothub-widget-discount__btn .bothub-widget-loading__spinner {
+    .meetbot-widget-discount__btn .meetbot-widget-loading,
+    .meetbot-widget-discount__btn .meetbot-widget-loading__spinner {
         height: 16px;
         width: 16px;
     }
@@ -124,36 +124,36 @@
 @media screen and (max-width: 768px) {
     @Width: 250px;
 
-    .bothub-widget-discount {
+    .meetbot-widget-discount {
         width: @Width;
 
-        .bothub-widget-discount__tip {
+        .meetbot-widget-discount__tip {
             width: 90px;
 
-            .bothub-widget-discount__notice {
+            .meetbot-widget-discount__notice {
                 font-size: 20px;
                 line-height: 22px;
             }
 
-            .bothub-widget-discount__msg {
+            .meetbot-widget-discount__msg {
                 font-size: 12px;
                 line-height: 14px;
             }
         }
 
-        .bothub-widget-discount__content {
+        .meetbot-widget-discount__content {
             width: 160px;
 
-            .bothub-widget-discount__content-text {
+            .meetbot-widget-discount__content-text {
                 font-size: 14px;
             }
 
-            .bothub-widget-discount__content-code {
+            .meetbot-widget-discount__content-code {
                 font-size: 16px;
             }
         }
 
-        .bothub-widget-discount__btn {
+        .meetbot-widget-discount__btn {
             width: @Width;
         }
     }

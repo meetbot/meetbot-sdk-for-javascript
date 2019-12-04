@@ -111,4 +111,4 @@ export interface HiddenData {
 }
 
 /** 自动隐藏数据储存 key */
-export const HiddenKey = 'bothub-widget-hide';
+export const HiddenKey = 'meetbot-widget-hide';

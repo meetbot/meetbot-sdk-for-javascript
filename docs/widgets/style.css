@@ -1,29 +1,29 @@
-.bothub-widget-article {
+.meetbot-widget-article {
     display: flex;
 }
 
-.bothub-widget-article > *{
+.meetbot-widget-article > *{
     width: 50%;
 }
 
-.bothub-widget-discription {
+.meetbot-widget-discription {
     margin-right: 40px;
 }
 
-.bothub-widget-discription__item p {
+.meetbot-widget-discription__item p {
     font-size: 16px;
     color: rgba(0,0,0,.8);
     text-indent: 24px;
     margin: 4px 0 4px 24px;
 }
 
-.bothub-widget-preview {
+.meetbot-widget-preview {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.bothub-widget-card {
+.meetbot-widget-card {
     width: 360px;
     border-radius: 4px;
     border: 1px solid #ebeef5;
@@ -36,7 +36,7 @@
     box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
 }
 
-.bothub-widget-card .bothub-widget-card__header {
+.meetbot-widget-card .meetbot-widget-card__header {
     padding: 12px 14px;
     border-bottom: 1px solid #ebeef5;
     box-sizing: border-box;
@@ -45,27 +45,27 @@
     align-items: center;
 }
 
-.bothub-widget-card .bothub-widget-card__article {
+.meetbot-widget-card .meetbot-widget-card__article {
     padding: 14px;
 }
 
-.bothub-widget-card__code {
+.meetbot-widget-card__code {
     margin-bottom: 0px;
     margin-top: 10px;
     padding-top: 10px;
     border-top: 1px solid #ebeef5;
 }
 
-.bothub-widget-card .bothub-widget-card__footer {
+.meetbot-widget-card .meetbot-widget-card__footer {
     padding: 12px 14px;
     border-top: 1px solid #ebeef5;
 }
 
-.bothub-widget-card__input+.bothub-widget-card__input {
+.meetbot-widget-card__input+.meetbot-widget-card__input {
     margin-top: 10px;
 }
 
-.bothub-widget-card__input .bothub-widget-card__input-label {
+.meetbot-widget-card__input .meetbot-widget-card__input-label {
     line-height: 32px;
     font-size: 14px;
 }

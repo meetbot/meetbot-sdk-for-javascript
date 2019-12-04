@@ -24,7 +24,7 @@ export interface MessageUsData extends WidgetDataCommon {
 export type FbMessageUsAttrs = Omit<MessageUsData, 'id' | 'type'>;
 
 const fbClass = 'fb-messengermessageus';
-const bhClass = 'bothub-messengermessageus';
+const bhClass = 'meetbot-messengermessageus';
 
 /**
  * [“给我们发消息”插件](https://developers.facebook.com/docs/messenger-platform/discovery/message-us-plugin)

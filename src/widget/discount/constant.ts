@@ -88,4 +88,4 @@ export interface ComponentProps extends Pick<DiscountData, 'align'> {
     emit: EventController['emit'];
 }
 
-export const bhClass = 'bothub-widget-discount';
+export const bhClass = 'meetbot-widget-discount';

@@ -43,8 +43,8 @@ enum EventName {
     rendered = 'rendered',
 }
 
-/** 发送给 bothub 的完整数据 */
-type BothubMessage = Required<RefData> & MessageMeta & {
+/** 发送给 meetbot 的完整数据 */
+type MeetbotMessage = Required<RefData> & MessageMeta & {
     page_id: string;
 };
 
@@ -95,7 +95,7 @@ export interface SendToMessengerData extends WidgetDataCommon {
 export type FbSendToMessengerAttrs = Pick<SendToMessengerData, 'color' | 'size' | 'enforceLogin' | 'ctaText' | 'pageId'>;
 
 const fbClass = 'fb-send-to-messenger';
-const bhClass = 'bothub-send-to-messenger';
+const bhClass = 'meetbot-send-to-messenger';
 
 /**
  * [“发送至 Messenger”插件](https://developers.facebook.com/docs/messenger-platform/discovery/send-to-messenger-plugin/)
@@ -106,7 +106,7 @@ export default class SendToMessenger extends BaseWidget<SendToMessengerData> {
     /** 是否已经发送数据 */
     sent = false;
     /** 每次事件生成的唯一编号 */
-    message?: BothubMessage;
+    message?: MeetbotMessage;
 
     constructor(data: SendToMessengerData) {
         super(data);

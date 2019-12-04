@@ -27,7 +27,7 @@
         <section>
             <h3>商品添加购物车事件</h3>
 
-            <div id="bothub-widget-jhk"></div>
+            <div id="meetbot-widget-jhk"></div>
 
             <el-button type="primary" size="medium" @click="() => window.BH.Event.addedToCart()">加入购物车</el-button>
         </section>
@@ -42,7 +42,7 @@
                 window.bhAsyncInit.push(function() {
                     window.BH.Widget.setConfig({
                         // 这里的 ID 编号指向下面的插件 ID
-                        id: 'bothub-widget-jhm',
+                        id: 'meetbot-widget-jhm',
                         message: {
                             type: 'receipt',
                             data: {
@@ -101,7 +101,7 @@
             </script>
 
             <!-- 插件渲染在这里 -->
-            <div id="bothub-widget-jhm"></div>
+            <div id="meetbot-widget-jhm"></div>
         </section>
     </div>
 

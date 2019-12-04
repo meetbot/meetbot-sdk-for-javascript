@@ -1,6 +1,6 @@
 # 聊天插件
 
-[使用预览](https://meetbot.github.io/bothub-sdk-for-javascript/widgets/customerchat/)
+[使用预览](https://meetbot.github.io/meetbot-sdk-for-javascript/widgets/customerchat/)
 
 ## 参数属性说明
 |属性名称|类型|是否可选|说明|

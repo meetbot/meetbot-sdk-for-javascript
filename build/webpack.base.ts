@@ -51,7 +51,7 @@ const baseConfig: WebpackConfig = {
             banner: (
                 'Project: Meetbot SDK for JavaScript' +
                 (command.name === 'Main' ? '\n' : ` - ${command.name}\n` ) +
-                `Author: ${new Date().getFullYear()} © Bothub\n` +
+                `Author: ${new Date().getFullYear()} © Meetbot\n` +
                 `Build: ${build}\nVersion: ${version}`
             ),
             entryOnly: false,

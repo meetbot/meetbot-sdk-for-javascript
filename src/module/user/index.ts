@@ -2,9 +2,9 @@ import {
     setCustomUserId,
     getCustomUserId,
     changeCustomUserId,
-} from './bothub';
+} from './meetbot';
 
-export * from './bothub';
+export * from './meetbot';
 export * from './facebook';
 
 // 默认导出为对外暴露的接口

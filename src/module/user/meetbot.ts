@@ -9,11 +9,11 @@ import { getQueryString } from 'src/lib/http';
 let customUserId: string = getCustomUserId();
 
 /** 用户自定义编号存储用的键值 */
-export const CustomUserIdKey = 'bothub_custom_user_id';
+export const CustomUserIdKey = 'meetbot_custom_user_id';
 
 /** 记录用户编号 */
 export function setCustomUserId(id: string) {
-    const key = 'bothub_custom_user_id';
+    const key = 'meetbot_custom_user_id';
     local.set(key, id);
     customUserId = id;
 }
@@ -30,7 +30,7 @@ export function getNewCustomUserId() {
  *  - url、localStorage、新建用户，三者优先级依次排列
  */
 export function getCustomUserId() {
-    const key = 'bothub_custom_user_id';
+    const key = 'meetbot_custom_user_id';
     return customUserId || getQueryString(key) || local.get(key) || getNewCustomUserId();
 }
 

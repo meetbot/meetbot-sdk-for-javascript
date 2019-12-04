@@ -1,15 +1,15 @@
 import './polyfill';
 import 'src/style';
 
-import Bothub from './bothub';
+import Meetbot from './meetbot';
 
 import { sandBox } from 'src/lib/utils';
 import { isArray } from 'src/lib/assert';
 
-// 全局 Bothub 命名空间声明
+// 全局 Meetbot 命名空间声明
 declare global {
     interface Window {
-        BH: typeof Bothub;
+        BH: typeof Meetbot;
     }
 }
 
@@ -17,7 +17,7 @@ declare global {
 Object.defineProperty(window, 'BH', {
     enumerable: false,
     value: {
-        ...Bothub,
+        ...Meetbot,
         ...(window.BH || {}),
     },
 });

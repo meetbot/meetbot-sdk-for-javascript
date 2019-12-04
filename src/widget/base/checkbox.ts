@@ -81,7 +81,7 @@ export interface FbCheckboxAttrs extends Pick<CheckboxData, 'allowLogin' | 'size
 }
 
 export const fbClass = 'fb-messenger-checkbox';
-export const bhClass = 'bothub-messenger-checkbox';
+export const bhClass = 'meetbot-messenger-checkbox';
 
 /**
  * [确认框插件](https://developers.facebook.com/docs/messenger-platform/reference/web-plugins#checkbox)

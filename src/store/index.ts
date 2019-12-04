@@ -5,7 +5,7 @@ import { InputWidgetData, WidgetData, Widget, setConfig } from 'src/widget';
 import * as user from 'src/module/user';
 
 /** 是否是调试模式 */
-const debug = getQueryString('bothubDebugMode') === 'true';
+const debug = getQueryString('meetbotDebugMode') === 'true';
 
 /** APP 编号 */
 export let messengerAppId = process.env.appId as string;
@@ -24,7 +24,7 @@ export const widgetData: WidgetData[] = [];
 export const widgets: Widget[] = [];
 
 /** 初始化参数 */
-interface BothubInitParams {
+interface MeetbotInitParams {
     /** 用户连接的 facebook 页面编号 */
     pageId: typeof pageId;
     /** APP 编号（`debug`选项为`true`时才会生效） */
@@ -42,7 +42,7 @@ interface BothubInitParams {
 }
 
 /** 初始化函数 */
-export function setGlobalParams(param: BothubInitParams) {
+export function setGlobalParams(param: MeetbotInitParams) {
     // 页面编号为必填，初始化
     pageId = param.pageId;
 

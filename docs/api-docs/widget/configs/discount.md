@@ -1,6 +1,6 @@
 # 聊天插件
 
-[使用预览](https://meetbot.github.io/bothub-sdk-for-javascript/widgets/discount/)
+[使用预览](https://meetbot.github.io/meetbot-sdk-for-javascript/widgets/discount/)
 
 ## 参数属性说明
 

@@ -12,9 +12,9 @@ export function getCustomUserId() {
         return shopifyId;
     }
 
-    const key = 'bothub_custom_user_id';
+    const key = 'meetbot_custom_user_id';
     const ref = Cookie.get('_shopify_sa_p') || '';
-    const index = ref.indexOf('bothub_custom_user_id');
+    const index = ref.indexOf('meetbot_custom_user_id');
 
     if (index >= 0) {
         const id = unescape(ref).substr(index + 22, 32);
@@ -83,7 +83,7 @@ const AssertMap: AnyObject<() => Partial<ShopifyConfig>> = {
 
 /** 获取当前插件参数 */
 function getShopifyParams(): ShopifyConfig {
-    const script = document.getElementById('bothub-sdk-cartsbot') as HTMLScriptElement;
+    const script = document.getElementById('meetbot-sdk-cartsbot') as HTMLScriptElement;
     const dataRef = script.getAttribute('data-config');
 
     if (!dataRef) {

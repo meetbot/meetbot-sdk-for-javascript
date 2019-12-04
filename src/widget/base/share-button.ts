@@ -26,7 +26,7 @@ export interface ShareButtonData extends WidgetDataCommon {
 export type FbShareButtonAttrs = Omit<ShareButtonData, 'id' | 'type'>;
 
 const fbClass = 'fb-share-button';
-const bhClass = 'bothub-share-button';
+const bhClass = 'meetbot-share-button';
 
 /**
  * [分享按钮插件](https://developers.facebook.com/docs/plugins/share-button/)

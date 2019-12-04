@@ -17,8 +17,8 @@ import Checkbox from 'src/widget/base/checkbox';
 import { WidgetType, HiddenKey, HiddenData } from 'src/widget/helper';
 import { AppEventNames, AppParameterNames } from 'typings/facebook';
 
-/** bothub 标准参数名称 */
-export interface BothubParameter {
+/** meetbot 标准参数名称 */
+export interface MeetbotParameter {
     /** 指向某个插件 */
     widget?: string;
 
@@ -47,16 +47,16 @@ export interface BothubParameter {
 }
 
 /**
- * bothub 标准参数名称映射至 facebook
+ * meetbot 标准参数名称映射至 facebook
  * @param {AnyObject} [params] 输入参数
  * @param {AnyObject<string>} [map] 参数映射表
  */
 export function transformParameter(params: AnyObject = {}, map: AnyObject<string> = {}) {
-    type BothubToFb = { [key in keyof BothubParameter]: AppParameterNames };
+    type MeetbotToFb = { [key in keyof MeetbotParameter]: AppParameterNames };
 
     // 这里不放在外面作为常量是因为 fb sdk 加载是异步的
     const { ParameterNames: fbParam } = window.FB.AppEvents;
-    const bhToFb: BothubToFb = {
+    const bhToFb: MeetbotToFb = {
         id: fbParam.CONTENT_ID,
         type: fbParam.CONTENT_TYPE,
         currency: fbParam.CURRENCY,
@@ -88,7 +88,7 @@ export function transformParameter(params: AnyObject = {}, map: AnyObject<string
                 continue;
             }
 
-            // 映射到 bothub 的键名
+            // 映射到 meetbot 的键名
             const mapBhKey = isDef(map[key]) ? map[key] : key;
             // 映射到 facebook 的键名
             const mapFbKey = isDef(bhToFb[mapBhKey]) ? bhToFb[mapBhKey] : mapBhKey;
@@ -110,7 +110,7 @@ function findCheckbox(assign: string) {
     );
 
     // 目标插件的原始数据
-    const widgetData = Array.from(document.querySelectorAll('div[id*=bothub-widget]'))
+    const widgetData = Array.from(document.querySelectorAll('div[id*=meetbot-widget]'))
         .map(({ id }) => store.widgetData.find(({ id: origin }) => origin === id))
         .filter(isDef)
         .find(({ id, type }) => isCheckboxDiscount(id, type));
@@ -176,8 +176,8 @@ function logFbEvent(name: string, value: number | null, params: object) {
 }
 
 /**
- * 记录 bothub 事件
- * @param {string} assign - 对应的 bothub 插件编号
+ * 记录 meetbot 事件
+ * @param {string} assign - 对应的 meetbot 插件编号
  * @param {string} name - 事件名称
  * @param {object} params - 此次 facebook 事件的参数
  */
@@ -212,7 +212,7 @@ function logBhEvent(assign: string, name: string, params: object) {
         ref: JSON.stringify(event),
     };
 
-    // 禁用 facebook 功能，则将数据发送回 bothub
+    // 禁用 facebook 功能，则将数据发送回 meetbot
     if (store.noFacebookLogEvent) {
         delete MessengerParams.user_ref;
 
@@ -236,7 +236,7 @@ function logBhEvent(assign: string, name: string, params: object) {
  * @param {string} [widgetId] 指向某个插件的编号（注：此参数不对客户开放）
  */
 export function logEvent(name: string | AppEventNames, value: number | null = null, params: object = {}, widgetId: string = '') {
-    // 发送 bothub 事件
+    // 发送 meetbot 事件
     logBhEvent(widgetId, name as string, params);
 
     // 发送 facebook 事件

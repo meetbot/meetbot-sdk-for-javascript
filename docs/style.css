@@ -32,7 +32,7 @@ pre {
     background-size: 30px,30px;
 }
 
-.bothub-widget-header {
+.meetbot-widget-header {
     font-size: 20px;
     line-height: 36px;
     padding: 0 6px;
@@ -40,7 +40,7 @@ pre {
     border-bottom: 1px solid #ccc;
 }
 
-.bothub-widget-article {
+.meetbot-widget-article {
     margin-top: 30px;
     padding-bottom: 80px;
 }

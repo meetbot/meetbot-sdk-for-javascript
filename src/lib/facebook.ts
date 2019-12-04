@@ -37,7 +37,7 @@ export const facebookReady = new Promise((resolve) => _switch = resolve);
 /** facebook sdk 是否加载完毕 */
 export let isFacebookReady = false;
 
-function bothubFacebookInit() {
+function meetbotFacebookInit() {
     // Facebook SDK 初始化
     window.FB.init({
         appId: messengerAppId,
@@ -70,17 +70,17 @@ export function facebookInit() {
     if (fbAsyncInitPrev) {
         // 初始化函数已经运行
         if (fbAsyncInitPrev.hasRun) {
-            bothubFacebookInit();
+            meetbotFacebookInit();
         }
         // 初始化函数还未运行
         else {
             window.fbAsyncInit = () => {
                 fbAsyncInitPrev();
-                bothubFacebookInit();
+                meetbotFacebookInit();
             };
         }
     }
     else {
-        window.fbAsyncInit = bothubFacebookInit;
+        window.fbAsyncInit = meetbotFacebookInit;
     }
 }
