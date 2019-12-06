@@ -21,7 +21,7 @@ window.bhAsyncInit = function() {
     });
 };
 </script>
-<script async defer src="https://meetbot.oss-cn-hongkong.aliyuncs.com/sdk/sdk-2-latest.js"></script>
+<script async defer src="https://meetbot.oss-cn-hongkong.aliyuncs.com/sdk/sdk-3.0.0.js"></script>
 ```
 
 初始化函数`window.BH.init`的具体解释，请看[文档](../core/init.md)。
