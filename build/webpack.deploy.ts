@@ -72,8 +72,8 @@ function compile(input: string, output: string): Promise<void> {
         });
         const clint = new OSS({
             region: 'oss-cn-hongkong',
-            accessKeyId: 'LTAInSoxN8THq5oo',
-            accessKeySecret: 'AnH79MYND7Tr0LSmeFvDTi60XoxIIT',
+            accessKeyId: storage.accessKeyId,
+            accessKeySecret: storage.accessKeySecret,
             bucket: 'meetbot',
         });
         const dirName = 'out/' +  baseConfig.output!.filename;
