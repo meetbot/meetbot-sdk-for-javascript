@@ -1,6 +1,6 @@
 {
   "name": "meetbot-sdk-for-javascript",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Meetbot SDK",
   "private": true,
   "main": "sdk.js",

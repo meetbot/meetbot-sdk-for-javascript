@@ -7,6 +7,9 @@ import * as user from 'src/module/user';
 /** 是否是调试模式 */
 const debug = getQueryString('meetbotDebugMode') === 'true';
 
+/**用户自定义的appId */
+export let clientAppId = '';
+
 /** APP 编号 */
 export let messengerAppId = process.env.appId as string;
 /** 用户连接的 facebook 页面编号 */
@@ -39,6 +42,9 @@ interface MeetbotInitParams {
     renderImmediately?: typeof renderImmediately;
     /** 页面插件数据 */
     widgets?: InputWidgetData[];
+
+    /**用户自定义的appId */
+    clientAppID?: string;
 }
 
 /** 初始化函数 */
@@ -73,5 +79,8 @@ export function setGlobalParams(param: MeetbotInitParams) {
     // 合并插件列表
     if (param.widgets) {
         setConfig(param.widgets);
+        if(isDef(param.clientAppID)) {
+            clientAppId = param.clientAppID;
+        }
     }
 }

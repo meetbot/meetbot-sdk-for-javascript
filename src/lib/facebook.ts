@@ -1,7 +1,7 @@
 import { warn } from 'src/lib/print';
 import { render } from 'src/widget';
 import { loadScript } from './utils';
-import { language, messengerAppId, renderImmediately } from 'src/store';
+import { language, messengerAppId, renderImmediately, clientAppId } from 'src/store';
 
 /** 加载 facebook SDK */
 export function loadFacebookSDK() {
@@ -40,7 +40,7 @@ export let isFacebookReady = false;
 function meetbotFacebookInit() {
     // Facebook SDK 初始化
     window.FB.init({
-        appId: messengerAppId,
+        appId: clientAppId ? clientAppId:  messengerAppId,
         xfbml: true,
         version: 'v3.2',
     });

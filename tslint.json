@@ -71,7 +71,7 @@
         // @link: https://palantir.github.io/tslint/rules/cyclomatic-complexity/
         "cyclomatic-complexity": [true, 30],
         // 强制 LF 换行
-        "linebreak-style": [true, "LF"],
+        "linebreak-style": [false, "LF"],
         // 每个文件最多声明多少个类
         "max-classes-per-file": [true, 5],
         // 允许模块的 default 导出
