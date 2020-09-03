@@ -22,6 +22,14 @@ Object.defineProperty(window, 'BH', {
     },
 });
 
+function eventify<T>(arr: Array<T>, callback: (arg: T) => void) {
+    arr.push = (e) => {
+        const num = Array.prototype.push.call(arr, e);
+        callback(e);
+        return num;
+    };
+}
+
 // 运行入口函数
 setTimeout(() => {
     const bhAsyncInit = window.bhAsyncInit;
@@ -31,5 +39,10 @@ setTimeout(() => {
     }
     else if (bhAsyncInit) {
         sandBox(bhAsyncInit)();
+    }
+    if (Array.isArray(window.bhAsyncInit)) {
+        eventify(window.bhAsyncInit, (item) => {
+            sandBox(item)();
+        });
     }
 });
