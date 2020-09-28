@@ -17,78 +17,78 @@ import uuid from 'uuid';
  *  - 所以这里也能理解为是向 facebook 发送的数据接口
  */
 interface RefData {
-    /** 数据编号 */
-    id?: string;
-    /** 数据类型 */
-    type?: 'feed' | 'receipt';
-    /** 插件事件标记 */
-    gateway: 'engagement';
-    /** 插件编号 */
-    code: string;
+  /** 数据编号 */
+  id?: string;
+  /** 数据类型 */
+  type?: 'feed' | 'receipt';
+  /** 插件事件标记 */
+  gateway: 'engagement';
+  /** 插件编号 */
+  code: string;
 }
 
 /** 附带的元数据 */
 interface MessageMeta {
-    /** 数据类型 */
-    type: 'feed' | 'receipt';
-    /** 完整数据 */
-    data: AnyObject;
+  /** 数据类型 */
+  type: 'feed' | 'receipt';
+  /** 完整数据 */
+  data: AnyObject;
 }
 
 /** Send to Messenger 事件名称 */
 enum EventName {
-    click = 'click',
-    login = 'login',
-    notYou = 'notYou',
-    rendered = 'rendered',
+  click = 'click',
+  login = 'login',
+  notYou = 'notYou',
+  rendered = 'rendered',
 }
 
 /** 发送给 meetbot 的完整数据 */
 type MeetbotMessage = Required<RefData> & MessageMeta & {
-    page_id: string;
+  page_id: string;
 };
 
 /** “发送至 Messenger”插件 */
 export interface SendToMessengerData extends WidgetDataCommon {
-    /** “发送至 Messenger”插件类型 */
-    type: WidgetType.SendToMessenger;
-    /**
-     * 主题颜色
-     *  - 默认为`blue`
-     */
-    color?: 'blue' | 'white';
-    /**
-     * 插件大小
-     *  - 默认为`large`
-     */
-    size?: 'standard' | 'large' | 'xlarge';
-    /**
-     * 如果为 true，则点击该按钮时，
-     * 已登录用户必须重新登录，
-     * 默认为`false`
-     */
-    enforceLogin?: boolean;
-    /**
-     * 按钮文本
-     *  - 默认为空
-     */
-    ctaText?:
-        'GET_THIS_IN_MESSENGER' | 'RECEIVE_THIS_IN_MESSENGER' | 'SEND_THIS_TO_ME' | 'GET_CUSTOMER_ASSISTANCE' |
-        'GET_CUSTOMER_SERVICE' | 'GET_SUPPORT' | 'LET_US_CHAT' | 'SEND_ME_MESSAGES' | 'ALERT_ME_IN_MESSENGER' |
-        'SEND_ME_UPDATES' | 'MESSAGE_ME' | 'LET_ME_KNOW' | 'KEEP_ME_UPDATED' | 'TELL_ME_MORE' | 'SUBSCRIBE_IN_MESSENGER' |
-        'SUBSCRIBE_TO_UPDATES' | 'GET_MESSAGES' | 'SUBSCRIBE' | 'GET_STARTED_IN_MESSENGER' | 'LEARN_MORE_IN_MESSENGER' | 'GET_STARTED';
+  /** “发送至 Messenger”插件类型 */
+  type: WidgetType.SendToMessenger;
+  /**
+   * 主题颜色
+   *  - 默认为`blue`
+   */
+  color?: 'blue' | 'white';
+  /**
+   * 插件大小
+   *  - 默认为`large`
+   */
+  size?: 'standard' | 'large' | 'xlarge';
+  /**
+   * 如果为 true，则点击该按钮时，
+   * 已登录用户必须重新登录，
+   * 默认为`false`
+   */
+  enforceLogin?: boolean;
+  /**
+   * 按钮文本
+   *  - 默认为空
+   */
+  ctaText?:
+  'GET_THIS_IN_MESSENGER' | 'RECEIVE_THIS_IN_MESSENGER' | 'SEND_THIS_TO_ME' | 'GET_CUSTOMER_ASSISTANCE' |
+  'GET_CUSTOMER_SERVICE' | 'GET_SUPPORT' | 'LET_US_CHAT' | 'SEND_ME_MESSAGES' | 'ALERT_ME_IN_MESSENGER' |
+  'SEND_ME_UPDATES' | 'MESSAGE_ME' | 'LET_ME_KNOW' | 'KEEP_ME_UPDATED' | 'TELL_ME_MORE' | 'SUBSCRIBE_IN_MESSENGER' |
+  'SUBSCRIBE_TO_UPDATES' | 'GET_MESSAGES' | 'SUBSCRIBE' | 'GET_STARTED_IN_MESSENGER' | 'LEARN_MORE_IN_MESSENGER' | 'GET_STARTED';
 
-    /** 附带的数据 */
-    message?: MessageMeta | (() => MessageMeta);
+  /** 附带的数据 */
+  message?: MessageMeta | (() => MessageMeta);
 
-    /** 点击事件 */
-    [EventName.click]?(): void;
-    /** 登录完成事件 */
-    [EventName.login]?(): void;
-    /** 更换当前登录账号事件 */
-    [EventName.notYou]?(): void;
-    /** 渲染完成事件 */
-    [EventName.rendered]?(): void;
+  /** 点击事件 */
+  [EventName.click]?(): void;
+  /** 登录完成事件 */
+  [EventName.login]?(): void;
+  /** 更换当前登录账号事件 */
+  [EventName.notYou]?(): void;
+  /** 渲染完成事件 */
+  [EventName.rendered]?(): void;
 }
 
 /** facebook “发送至 Messenger”插件属性 */
@@ -101,142 +101,160 @@ const bhClass = 'meetbot-send-to-messenger';
  * [“发送至 Messenger”插件](https://developers.facebook.com/docs/messenger-platform/discovery/send-to-messenger-plugin/)
  */
 export default class SendToMessenger extends BaseWidget<SendToMessengerData> {
-    fbAttrs!: FbSendToMessengerAttrs;
+  fbAttrs!: FbSendToMessengerAttrs;
 
-    /** 是否已经发送数据 */
-    sent = false;
-    /** 每次事件生成的唯一编号 */
-    message?: MeetbotMessage;
+  /** 是否已经发送数据 */
+  sent = false;
+  /** 每次事件生成的唯一编号 */
+  message?: MeetbotMessage;
 
-    constructor(data: SendToMessengerData) {
-        super(data);
+  constructor(data: SendToMessengerData) {
+    super(data);
 
-        this.init();
-        this.check();
+    this.init();
+    this.check();
+  }
+
+  /** 引用编译 */
+  get ref() {
+    const { code, message } = this;
+
+    const data: RefData = {
+      code,
+      gateway: 'engagement',
+    };
+
+    if (message) {
+      data.id = message.id;
+      data.type = message.type;
     }
 
-    /** 引用编译 */
-    get ref() {
-        const { code, message } = this;
-
-        const data: RefData = {
-            code,
-            gateway: 'engagement',
-        };
-
-        if (message) {
-            data.id = message.id;
-            data.type = message.type;
+    if (window.Shopify && window.Shopify.checkout && window.Shopify.checkout.order_id) {
+      const { order_id, currency, total_price } = window.Shopify.checkout;
+      const extra = {
+        order_id,
+        // @ts-ignore
+        event_id: `${this.origin.pageId}_${code}_${(window.location.host).replace(/[\.-]/g, '_')}_${this.customer_user_ref.replace(/[\.-]/g, '_')}`,
+        custom_user_id: window.localStorage.meetbot_custom_user_id.replace(/^\"|\"$/g, ''),
+        params: {
+          fb_content_type: 'shopify',
+          fb_content_id: order_id,
+          fb_currency: currency,
+          _valueToSum: total_price
         }
+      }
+      return `base64:${window.btoa(JSON.stringify({ ...data, ...extra }))}`;
+    }
+    return `base64:${window.btoa(JSON.stringify(data))}`;
+  }
 
-        return `base64:${window.btoa(JSON.stringify(data))}`;
+  init() {
+    const { origin } = this;
+
+    // @ts-ignore
+    this.customer_user_ref = uuid();
+    this.message = this.getMessage();
+    this.fbAttrs = shallowCopy(origin, ['color', 'size', 'enforceLogin', 'ctaText', 'pageId']);
+
+    this.off();
+    this.on(EventName.click, origin[EventName.click]);
+    this.on(EventName.login, origin[EventName.login]);
+    this.on(EventName.notYou, origin[EventName.notYou]);
+    this.on(EventName.rendered, origin[EventName.rendered]);
+
+    // 发送消息之后，状态位赋值
+    this.on('click', () => this.sent = true);
+    // 如果包含有信息，则渲染完成之后发送完整信息
+    this.on('rendered', () => {
+      const { message } = this;
+
+      if (message) {
+        post('tr/', message).then(() => this.sent = true);
+      }
+    });
+  }
+  parse(focus = false) {
+    if ((!focus && this.isRendered) || !this.canRender || !this.$el) {
+      log(`Skip ${this.name} with id ${this.id}`);
+      return;
     }
 
-    init() {
-        const { origin } = this;
+    /** 是否是重复渲染 */
+    const alreadyRender = this.isRendered;
+    const dom = this.$el.firstElementChild!;
 
-        this.message = this.getMessage();
-        this.fbAttrs = shallowCopy(origin, ['color', 'size', 'enforceLogin', 'ctaText', 'pageId']);
+    this.sent = false;
+    this.isRendered = false;
 
-        this.off();
-        this.on(EventName.click, origin[EventName.click]);
-        this.on(EventName.login, origin[EventName.login]);
-        this.on(EventName.notYou, origin[EventName.notYou]);
-        this.on(EventName.rendered, origin[EventName.rendered]);
+    addClass(dom, fbClass);
+    addClass(dom, bhClass);
 
-        // 发送消息之后，状态位赋值
-        this.on('click', () => this.sent = true);
-        // 如果包含有信息，则渲染完成之后发送完整信息
-        this.on('rendered', () => {
-            const { message } = this;
+    setAttributes(dom, this.fbAttrs);
 
-            if (message) {
-                post('tr/', message).then(() => this.sent = true);
-            }
-        });
+    dom.setAttribute('data-ref', this.ref);
+    dom.setAttribute('messenger_app_id', messengerAppId);
+
+    window.FB.XFBML.parse(this.$el);
+
+    // 绑定事件
+    if (!alreadyRender) {
+      window.FB.Event.subscribe('send_to_messenger', (ev: SendToMessengerEvent) => {
+        if (!ev.ref) {
+          warn(`Can not found 'ref' attrubite in this '${this.name}' Plugin`, true);
+          return;
+        }
+
+        if (ev.ref !== this.ref) {
+          return;
+        }
+
+        if (ev.event === 'rendered' && !this.isRendered) {
+          log(`${this.name} Plugin with ID ${this.id} has been rendered`);
+          this.isRendered = true;
+          this.emit(EventName.rendered);
+        }
+        else if (ev.event === 'clicked') {
+          this.emit(EventName.click);
+        }
+        else if (ev.event === 'not_you') {
+          this.emit(EventName.notYou);
+        }
+        else if (ev.event === 'opt_in') {
+          this.emit(EventName.login);
+        }
+      });
     }
-    parse(focus = false) {
-        if ((!focus && this.isRendered) || !this.canRender || !this.$el) {
-            log(`Skip ${this.name} with id ${this.id}`);
-            return;
-        }
+  }
+  /** 当前插件附带的数据转换为标准格式 */
+  getMessage() {
+    const { message, pageId } = this.origin;
 
-        /** 是否是重复渲染 */
-        const alreadyRender = this.isRendered;
-        const dom = this.$el.firstElementChild!;
-
-        this.sent = false;
-        this.isRendered = false;
-
-        addClass(dom, fbClass);
-        addClass(dom, bhClass);
-
-        setAttributes(dom, this.fbAttrs);
-
-        dom.setAttribute('data-ref', this.ref);
-        dom.setAttribute('messenger_app_id', messengerAppId);
-
-        window.FB.XFBML.parse(this.$el);
-
-        // 绑定事件
-        if (!alreadyRender) {
-            window.FB.Event.subscribe('send_to_messenger', (ev: SendToMessengerEvent) => {
-                if (!ev.ref) {
-                    warn(`Can not found 'ref' attrubite in this '${this.name}' Plugin`, true);
-                    return;
-                }
-
-                if (ev.ref !== this.ref) {
-                    return;
-                }
-
-                if (ev.event === 'rendered' && !this.isRendered) {
-                    log(`${this.name} Plugin with ID ${this.id} has been rendered`);
-                    this.isRendered = true;
-                    this.emit(EventName.rendered);
-                }
-                else if (ev.event === 'clicked') {
-                    this.emit(EventName.click);
-                }
-                else if (ev.event === 'not_you') {
-                    this.emit(EventName.notYou);
-                }
-                else if (ev.event === 'opt_in') {
-                    this.emit(EventName.login);
-                }
-            });
-        }
+    if (!message) {
+      return;
     }
-    /** 当前插件附带的数据转换为标准格式 */
-    getMessage() {
-        const { message, pageId } = this.origin;
 
-        if (!message) {
-            return;
-        }
+    let data: MessageMeta;
 
-        let data: MessageMeta;
+    if (isFunc(message)) {
+      data = message();
 
-        if (isFunc(message)) {
-            data = message();
-
-            if (!data) {
-                return;
-            }
-        }
-        else if (isObject(message)) {
-            data = message;
-        }
-        else {
-            return;
-        }
-
-        return {
-            ...data,
-            code: this.code,
-            page_id: pageId as string,
-            gateway: 'engagement' as const,
-            id: uuid(),
-        };
+      if (!data) {
+        return;
+      }
     }
+    else if (isObject(message)) {
+      data = message;
+    }
+    else {
+      return;
+    }
+
+    return {
+      ...data,
+      code: this.code,
+      page_id: pageId as string,
+      gateway: 'engagement' as const,
+      id: uuid(),
+    };
+  }
 }
