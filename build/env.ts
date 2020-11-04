@@ -1,36 +1,36 @@
 interface Environment {
-    /** 后端 APP 编号 */
-    messenger_app_id: number;
-    /** 后端接口地址 */
-    api_server: string;
-    /** sdk 文件地址 */
-    sdk_href: string;
-    /** 上传属性 */
-    storage: {
-        projectId: string;
-        bucketName: string;
-        gcloudFileName: string;
-    };
+  /** 后端 APP 编号 */
+  messenger_app_id: number;
+  /** 后端接口地址 */
+  api_server: string;
+  /** sdk 文件地址 */
+  sdk_href: string;
+  /** 上传属性 */
+  storage: {
+    projectId: string;
+    bucketName: string;
+    gcloudFileName: string;
+  };
 }
 
 export const uat: Environment = {
-    messenger_app_id: 418557695509853,
-    api_server: 'https://www-bothub-ai.meetsocial.cn:6443/',
-    sdk_href: 'https://storage.googleapis.com/bothub-uat-sdk/dist/sdk-2-latest.js',
-    storage: {
-        projectId: 'bothub-uat',
-        bucketName: 'bothub-uat-sdk',
-        gcloudFileName: 'gcloud-uat.json',
-    },
+  messenger_app_id: 418557695509853,
+  api_server: 'https://www-bothub-ai.meetsocial.cn:6443/',
+  sdk_href: 'https://storage.googleapis.com/bothub-uat-sdk/dist/sdk-2-latest.js',
+  storage: {
+    projectId: 'bothub-uat',
+    bucketName: 'bothub-uat-sdk',
+    gcloudFileName: 'gcloud-uat.json',
+  },
 };
 
 export const prod: Environment = {
-    messenger_app_id: 418557695509853,
-    api_server: 'https://t.meetbot.biz/',
-    sdk_href: 'https://meetbot.oss-cn-hongkong.aliyuncs.com/sdk/sdk-2-latest.js',
-    storage: {
-        projectId: 'bothub-1340',
-        bucketName: 'sdk.bothub.ai',
-        gcloudFileName: 'gcloud.json',
-    },
+  messenger_app_id: process.env.APP_NODE_ENV === 'production' ? 418557695509853 : 477171043003051,
+  api_server: 'https://t.meetbot.biz/',
+  sdk_href: 'https://meetbot.oss-cn-hongkong.aliyuncs.com/sdk/sdk-2-latest.js',
+  storage: {
+    projectId: 'bothub-1340',
+    bucketName: 'sdk.bothub.ai',
+    gcloudFileName: 'gcloud.json',
+  },
 };

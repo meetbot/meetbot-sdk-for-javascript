@@ -1,51 +1,46 @@
-process.env.NODE_ENV = 'production';
-
 import chalk from 'chalk';
 import webpack from 'webpack';
 import baseConfig from './webpack.base';
 import TerserPlugin from 'terser-webpack-plugin';
-import GoogleCloudStorage from 'webpack-google-cloud-storage-plugin';
-
-import * as env from './env';
 import OSS from 'ali-oss';
 
 import { readdirSync } from 'fs';
-import { join, parse, relative } from 'path';
-import { output as dist } from './config';
-import { resolve, version, command } from './utils';
+import { join } from 'path';
+import { resolve, version } from './utils';
 
-const { storage } = env[command.env];
+const dotenv = require('dotenv');
+dotenv.config();
 
 if (!baseConfig.optimization) {
-    baseConfig.optimization = {};
+  baseConfig.optimization = {};
 }
 
 if (!baseConfig.optimization.minimizer) {
-    baseConfig.optimization.minimizer = [];
+  baseConfig.optimization.minimizer = [];
 }
 
 baseConfig.devtool = false;
 
 baseConfig.optimization.minimizer.push(
-    new TerserPlugin({
-        test: /\.js$/i,
-        cache: false,
-        terserOptions: {
-            ecma: 5,
-            ie8: false,
-            safari10: false,
-            output: {
-                comments: /^!/,
-            },
-        },
-    }),
+  new TerserPlugin({
+    test: /\.js$/i,
+    cache: false,
+    terserOptions: {
+      ecma: 5,
+      ie8: false,
+      safari10: false,
+      output: {
+        comments: /^!/,
+      },
+    },
+  }),
 );
 
 baseConfig.performance = {
-    hints: false,
-    // 大小限制为 80Kb（单位为 bytes）
-    maxAssetSize: 80000,
-    maxEntrypointSize: 80000,
+  hints: false,
+  // 大小限制为 80Kb（单位为 bytes）
+  maxAssetSize: 80000,
+  maxEntrypointSize: 80000,
 };
 
 /**
@@ -54,77 +49,90 @@ baseConfig.performance = {
  * @param {string} output 输出文件
  */
 function compile(input: string, output: string): Promise<void> {
-    return new Promise((then, reject) => {
-        // 设置入口
-        baseConfig.entry = input;
-        // 设置输出
-        baseConfig.output!.filename = output;
-        webpack(baseConfig, (err) => {
-            if (err) {
-                reject(err);
-                console.log(err);
-                return;
-            }
-
-            console.log(chalk.cyan(`Build complete '${output}'.`));
-
-            then();
-        });
-        const clint = new OSS({
-            region: 'oss-cn-hongkong',
-            accessKeyId: storage.accessKeyId,
-            accessKeySecret: storage.accessKeySecret,
-            bucket: 'meetbot',
-        });
-        const dirName = 'out/' +  baseConfig.output!.filename;
-        const truefile = baseConfig.output!.path + '/' + baseConfig.output!.filename;
-        clint.multipartUpload(dirName, truefile, { }).then((resut) => {
-            // console.log('result', resut);
-        }).catch((err) => {
-            console.log('err', err);
-        });
+  return new Promise((resolve, reject) => {
+    // 设置入口
+    baseConfig.entry = input;
+    // 设置输出
+    baseConfig.output!.filename = output;
+    webpack(baseConfig, (err) => {
+      if (err) {
+        reject(err);
+        console.log(err);
+        return;
+      }
+      console.log(chalk.cyan(`Build complete '${output}'.`));
+      resolve();
     });
+  });
+}
+
+/**
+ * 判断oss云端文件是否存在，存在则备份
+ * @param client alioss
+ * @param name 不包含Bucket名称在内的Object的完整路径，例如example/test.txt
+ * @param options 
+ */
+async function isExistObject(client: OSS, name: string, options = {}) {
+  try {
+    await client.head(name, options);
+    await client.copy(`${name}.backup`, name);
+  } catch (error) {
+    if (error.code === 'NoSuchKey') {
+    }
+  }
+}
+
+/**
+ * 分片上传
+ * @param client alioss
+ * @param dirName 文件名（例如file.txt）或目录（例如abc/test/file.txt）
+ * @param truefile 文件路径
+ */
+function multipartUpload(client: OSS, dirName: string, truefile: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    client.multipartUpload(dirName, truefile, {}).then((resut: any) => {
+      console.log(chalk.cyan(`\nDeploy complete ${dirName}`));
+      resolve();
+    }).catch((err: any) => {
+      console.error(err);
+      reject(err);
+    });
+  })
 }
 
 // 主流程
 async function main() {
-    const files: [string, string][] = [
-        [resolve('src/init/index.ts'), 'sdk-2-latest.js'],
-        [resolve('src/init/index.ts'), join('releases', `sdk-${version}.js`)],
-    ];
+  if (!process.env.ossKey || !process.env.ossSecret) {
+    console.log(chalk.cyan('\nossKey or ossSecret is empty.'));
+    console.log(chalk.cyan('Deploy failed.\n'));
+    return;
+  }
+  const client = new OSS({
+    region: 'oss-cn-hongkong',
+    accessKeyId: process.env.ossKey || '',
+    accessKeySecret: process.env.ossSecret || '',
+    bucket: 'meetbot',
+  });
+  
+  const files: [string, string][] = [[resolve('src/init/index.ts'), join('', `sdk-${version}.js`)]];
+  readdirSync(resolve('src/special')).forEach((file) => files.push([
+    resolve(`src/special/${file}/index.ts`),
+    `${file}.js`,
+  ]));
+  files.push([resolve('src/special/shopify/order-update.ts'), 'order-update.js']);
 
-    readdirSync(resolve('src/special')).forEach((file) => files.push([
-        resolve(`src/special/${file}/index.ts`),
-        `special/${file}.js`,
-    ]));
+  const node_env = process.env.APP_NODE_ENV === 'production' ? 'prod' : 'test';
+  
+  for (let i = 0; i < files.length; i++) {
+    await compile(...files[i]);
+    const dirName = `sdk/${node_env}/` + baseConfig.output!.filename;
+    const truefile = baseConfig.output!.path + '/' + baseConfig.output!.filename;
 
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        // 最后一次编译设置上传
-        if (i === files.length - 1) {
-            // baseConfig.plugins!.push(new GoogleCloudStorage({
-            //     directory: dist,
-            //     include: files.map(([, item]) => parse(item).base),
-            //     storageOptions: {
-            //         projectId: storage.projectId,
-            //         keyFilename: resolve(storage.gcloudFileName),
-            //     },
-            //     uploadOptions: {
-            //         gzip: true,
-            //         makePublic: true,
-            //         bucketName: storage.bucketName,
-            //         destinationNameFn: (item: any) => join('dist', relative(dist, item.path)),
-            //         metadataFn: () => ({
-            //             cacheControl: 'no-store',
-            //         }),
-            //     },
-            // }));
-        }
+    isExistObject(client, dirName);
 
-        await compile(...file);
-        // console.log(...file, 'file');
-    }
-    console.log(chalk.cyan('\nDeploy complete.\n'));
+    await multipartUpload(client, dirName, truefile);
+  }
+  console.log(chalk.cyan('\nDeploy complete.\n'));
 }
 
 console.log('\x1Bc');
