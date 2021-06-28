@@ -9,7 +9,10 @@ function getProductForm() {
   // 迭代所有表单元素
   for (let i = 0; i < forms.length; i++) {
     // 带有`cart/add`的标记就是所求
-    if (forms[i].action.match(/cart\/add/)) {
+    if (
+      forms[i].action.match(/cart\/add/) ||
+      forms[i].className.match(/cart/)
+    ) {
       return forms[i];
     }
   }
@@ -31,9 +34,12 @@ function getSelectedVariantId() {
     return;
   }
 
-  const formSelection = form.id as any as HTMLSelectElement;
-  const options = formSelection.options && formSelection.options[formSelection.selectedIndex];
-  const value: string = options ? options.value : (formSelection && formSelection.value);
+  const formSelection = (form.id as any) as HTMLSelectElement;
+  const options =
+    formSelection.options && formSelection.options[formSelection.selectedIndex];
+  const value: string = options
+    ? options.value
+    : formSelection && formSelection.value;
 
   if (value) {
     meta.selectedVariantId = value;
@@ -46,7 +52,9 @@ function getAddToCartBtn() {
   const form = getProductForm();
 
   if (form) {
-    const addToCart = form.querySelector('input[type=submit], button[name=add], button[data-action="add-to-cart"]');
+    const addToCart = form.querySelector(
+      'input[type=submit], button[name=add], button[type=submit], button[data-action="add-to-cart"], button[class*="added-to-cart"], button[class*="add_to_cart"], button[class*="cart"]'
+    );
 
     if (addToCart) {
       return addToCart;
@@ -64,7 +72,10 @@ function insertDomAfterCart(html: (width: number) => string) {
     return;
   }
 
-  const formStyle = (btn.parentElement ? btn.parentElement : btn).getBoundingClientRect();
+  const formStyle = (btn.parentElement
+    ? btn.parentElement
+    : btn
+  ).getBoundingClientRect();
   const wrapper = document.createElement('div');
 
   wrapper.innerHTML = html(formStyle.width);
@@ -107,8 +118,8 @@ function initCheckbox(config: NonNullable<typeof Config.recall>) {
     id: config.id,
     origin: location.origin,
     centerAlign: true,
-    check: () => isChecked = true,
-    unCheck: () => isChecked = false,
+    check: () => (isChecked = true),
+    unCheck: () => (isChecked = false),
     rendered: () => {
       if (dom) {
         dom.lastElementChild!.textContent = config.intro_text || null;
@@ -118,15 +129,17 @@ function initCheckbox(config: NonNullable<typeof Config.recall>) {
 
   window.BH.Widget.setConfig(data);
 
-  let dom: Element | undefined = document.getElementById('meetbot-shopify-checkbox-wrapper') || undefined;
+  let dom: Element | undefined =
+    document.getElementById('meetbot-shopify-checkbox-wrapper') || undefined;
 
   if (!dom) {
-    dom = insertDomAfterCart((width) => (
-      `<div id="meetbot-shopify-checkbox-wrapper" style="display: flex; justify-content: center; flex-direction: column; width: ${width}px">` +
-      `<div style="text-align: center;" id="${data.id}"></div>` +
-      '<div style="text-align: center;"></div>' +
-      '</div>'
-    ));
+    dom = insertDomAfterCart(
+      width =>
+        `<div id="meetbot-shopify-checkbox-wrapper" style="display: flex; justify-content: center; flex-direction: column; width: ${width}px">` +
+        `<div style="text-align: center;" id="${data.id}"></div>` +
+        '<div style="text-align: center;"></div>' +
+        '</div>'
+    );
   }
 
   return function ckeckboxSubscribed() {
@@ -141,20 +154,26 @@ function initDiscount(config: NonNullable<typeof Config.recall>) {
   const data: Partial<DiscountData> = {
     id: config.id,
     origin: location.origin,
-    getCode: () => get(`shopify/cartsbot/${Config.shop_id}/discount-code-for-widget/${getCustomUserId()}`).then(({ data }) => ({
-      code: data.code,
-      message: data.text,
-      isSubscribed: Boolean(data.has_subscribed),
-    })),
+    getCode: () =>
+      get(
+        `shopify/cartsbot/${
+          Config.shop_id
+        }/discount-code-for-widget/${getCustomUserId()}`
+      ).then(({ data }) => ({
+        code: data.code,
+        message: data.text,
+        isSubscribed: Boolean(data.has_subscribed),
+      })),
   };
 
   window.BH.Widget.setConfig(data);
 
-  insertDomAfterCart((width) => (
-    `<div style="display: flex; justify-content: center; flex-direction: column; width: ${width}px">` +
-    `<div style="text-align: center;" id="${data.id}"></div>` +
-    '</div>'
-  ));
+  insertDomAfterCart(
+    width =>
+      `<div style="display: flex; justify-content: center; flex-direction: column; width: ${width}px">` +
+      `<div style="text-align: center;" id="${data.id}"></div>` +
+      '</div>'
+  );
 }
 
 /** 商品召回初始化 */
@@ -164,12 +183,11 @@ export function initAddToCard() {
   }
 
   /** 按钮按下的回调函数 */
-  let btnClick = () => { };
+  let btnClick = () => {};
 
   if (Config.recall.type === 'checkbox') {
     btnClick = initCheckbox(Config.recall);
-  }
-  else if (Config.recall.type === 'discount') {
+  } else if (Config.recall.type === 'discount') {
     initDiscount(Config.recall);
   }
 
@@ -194,7 +212,10 @@ export function initAddToCard() {
       return;
     }
 
-    const { ShopifyAnalytics, BH: { Event } } = window;
+    const {
+      ShopifyAnalytics,
+      BH: { Event },
+    } = window;
     const { currency, product } = ShopifyAnalytics.meta;
 
     const skuData = product!.variants.find(({ id }) => id === +skuId);
@@ -204,38 +225,43 @@ export function initAddToCard() {
       return;
     }
 
-    const messengerCheckboxObj = document.getElementsByClassName("fb-messenger-checkbox")[0];
-    const app_id = messengerCheckboxObj.getAttribute("messenger_app_id");
-    const page_id = messengerCheckboxObj.getAttribute("page_id");
-    const user_ref = messengerCheckboxObj.getAttribute("user_ref");
+    const messengerCheckboxObj = document.getElementsByClassName(
+      'fb-messenger-checkbox'
+    )[0];
+    const app_id = messengerCheckboxObj.getAttribute('messenger_app_id');
+    const page_id = messengerCheckboxObj.getAttribute('page_id');
+    const user_ref = messengerCheckboxObj.getAttribute('user_ref');
     const fb_content_id = product!.variants[0].id;
     const fb_content_value = product!.variants[0].price;
     const fb_currency = currency;
     const fb_content_type = product!.type;
     const user_agent = navigator.userAgent;
-    const customer_user_id = window.localStorage.meetbot_custom_user_id.replace(/^\"|\"$/g, '');
+    const customer_user_id = window.localStorage.meetbot_custom_user_id.replace(
+      /^\"|\"$/g,
+      ''
+    );
     const ref = {
-      'ev': "fb_mobile_add_to_cart",
-      'params': {
-        "fb_content_id": fb_content_id,
-        "fb_content_type": fb_content_type,
-        "fb_currency": fb_currency,
-        "fb_content_value": fb_content_value
+      ev: 'fb_mobile_add_to_cart',
+      params: {
+        fb_content_id: fb_content_id,
+        fb_content_type: fb_content_type,
+        fb_currency: fb_currency,
+        fb_content_value: fb_content_value,
       },
-      'code': 'widget',
-      'user_agent': user_agent,
-      'gateway': 'engagement',
-      'fb_user_id': '',
-      'id': page_id + "_" + user_ref,
-      'custom_user_id': customer_user_id
+      code: 'widget',
+      user_agent: user_agent,
+      gateway: 'engagement',
+      fb_user_id: '',
+      id: page_id + '_' + user_ref,
+      custom_user_id: customer_user_id,
     };
     var jsonStrRef = JSON.stringify(ref);
-    console.log("checkbox data", app_id, page_id, user_ref, ref);
+    console.log('checkbox data', app_id, page_id, user_ref, ref);
     window.FB.AppEvents.logEvent('MessengerCheckboxUserConfirmation', null, {
-      'app_id': app_id,
-      'page_id': page_id,
-      'ref': jsonStrRef,
-      'user_ref': user_ref
+      app_id: app_id,
+      page_id: page_id,
+      ref: jsonStrRef,
+      user_ref: user_ref,
     });
   });
 
