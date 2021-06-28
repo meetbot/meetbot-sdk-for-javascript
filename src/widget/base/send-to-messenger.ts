@@ -44,9 +44,10 @@ enum EventName {
 }
 
 /** 发送给 meetbot 的完整数据 */
-type MeetbotMessage = Required<RefData> & MessageMeta & {
-  page_id: string;
-};
+type MeetbotMessage = Required<RefData> &
+  MessageMeta & {
+    page_id: string;
+  };
 
 /** “发送至 Messenger”插件 */
 export interface SendToMessengerData extends WidgetDataCommon {
@@ -73,10 +74,27 @@ export interface SendToMessengerData extends WidgetDataCommon {
    *  - 默认为空
    */
   ctaText?:
-  'GET_THIS_IN_MESSENGER' | 'RECEIVE_THIS_IN_MESSENGER' | 'SEND_THIS_TO_ME' | 'GET_CUSTOMER_ASSISTANCE' |
-  'GET_CUSTOMER_SERVICE' | 'GET_SUPPORT' | 'LET_US_CHAT' | 'SEND_ME_MESSAGES' | 'ALERT_ME_IN_MESSENGER' |
-  'SEND_ME_UPDATES' | 'MESSAGE_ME' | 'LET_ME_KNOW' | 'KEEP_ME_UPDATED' | 'TELL_ME_MORE' | 'SUBSCRIBE_IN_MESSENGER' |
-  'SUBSCRIBE_TO_UPDATES' | 'GET_MESSAGES' | 'SUBSCRIBE' | 'GET_STARTED_IN_MESSENGER' | 'LEARN_MORE_IN_MESSENGER' | 'GET_STARTED';
+    | 'GET_THIS_IN_MESSENGER'
+    | 'RECEIVE_THIS_IN_MESSENGER'
+    | 'SEND_THIS_TO_ME'
+    | 'GET_CUSTOMER_ASSISTANCE'
+    | 'GET_CUSTOMER_SERVICE'
+    | 'GET_SUPPORT'
+    | 'LET_US_CHAT'
+    | 'SEND_ME_MESSAGES'
+    | 'ALERT_ME_IN_MESSENGER'
+    | 'SEND_ME_UPDATES'
+    | 'MESSAGE_ME'
+    | 'LET_ME_KNOW'
+    | 'KEEP_ME_UPDATED'
+    | 'TELL_ME_MORE'
+    | 'SUBSCRIBE_IN_MESSENGER'
+    | 'SUBSCRIBE_TO_UPDATES'
+    | 'GET_MESSAGES'
+    | 'SUBSCRIBE'
+    | 'GET_STARTED_IN_MESSENGER'
+    | 'LEARN_MORE_IN_MESSENGER'
+    | 'GET_STARTED';
 
   /** 附带的数据 */
   message?: MessageMeta | (() => MessageMeta);
@@ -92,7 +110,10 @@ export interface SendToMessengerData extends WidgetDataCommon {
 }
 
 /** facebook “发送至 Messenger”插件属性 */
-export type FbSendToMessengerAttrs = Pick<SendToMessengerData, 'color' | 'size' | 'enforceLogin' | 'ctaText' | 'pageId'>;
+export type FbSendToMessengerAttrs = Pick<
+  SendToMessengerData,
+  'color' | 'size' | 'enforceLogin' | 'ctaText' | 'pageId'
+>;
 
 const fbClass = 'fb-send-to-messenger';
 const bhClass = 'meetbot-send-to-messenger';
@@ -102,6 +123,8 @@ const bhClass = 'meetbot-send-to-messenger';
  */
 export default class SendToMessenger extends BaseWidget<SendToMessengerData> {
   fbAttrs!: FbSendToMessengerAttrs;
+
+  customer_user_ref!: string;
 
   /** 是否已经发送数据 */
   sent = false;
@@ -129,23 +152,40 @@ export default class SendToMessenger extends BaseWidget<SendToMessengerData> {
       data.type = message.type;
     }
 
-    if (window.Shopify && window.Shopify.checkout && window.Shopify.checkout.order_id) {
+    let all_data = {
+      ...data,
+      product_link: decodeURIComponent(window.location.href), // 添加商品详情页网址
+    };
+
+    if (
+      window.Shopify &&
+      window.Shopify.checkout &&
+      window.Shopify.checkout.order_id
+    ) {
       const { order_id, currency, total_price } = window.Shopify.checkout;
       const extra = {
         order_id,
         // @ts-ignore
-        event_id: `${this.origin.pageId}_${code}_${(window.location.host).replace(/[\.-]/g, '_')}_${this.customer_user_ref.replace(/[\.-]/g, '_')}`,
-        custom_user_id: window.localStorage.meetbot_custom_user_id.replace(/^\"|\"$/g, ''),
+        event_id: `${this.origin.pageId}_${code}_${window.location.host.replace(
+          /[\.-]/g,
+          '_'
+        )}_${this.customer_user_ref.replace(/[\.-]/g, '_')}`,
+        custom_user_id: window.localStorage.meetbot_custom_user_id.replace(
+          /^\"|\"$/g,
+          ''
+        ),
         params: {
           fb_content_type: 'shopify',
           fb_content_id: order_id,
           fb_currency: currency,
-          _valueToSum: total_price
-        }
-      }
-      return `base64:${window.btoa(JSON.stringify({ ...data, ...extra }))}`;
+          _valueToSum: total_price,
+        },
+      };
+      all_data = { ...all_data, ...extra };
+      // return `base64:${window.btoa(JSON.stringify({ ...data, ...extra }))}`;
     }
-    return `base64:${window.btoa(JSON.stringify(data))}`;
+    // return `base64:${window.btoa(JSON.stringify(data))}`;
+    return `base64:${window.btoa(JSON.stringify(all_data))}`;
   }
 
   init() {
@@ -154,7 +194,13 @@ export default class SendToMessenger extends BaseWidget<SendToMessengerData> {
     // @ts-ignore
     this.customer_user_ref = uuid();
     this.message = this.getMessage();
-    this.fbAttrs = shallowCopy(origin, ['color', 'size', 'enforceLogin', 'ctaText', 'pageId']);
+    this.fbAttrs = shallowCopy(origin, [
+      'color',
+      'size',
+      'enforceLogin',
+      'ctaText',
+      'pageId',
+    ]);
 
     this.off();
     this.on(EventName.click, origin[EventName.click]);
@@ -163,13 +209,13 @@ export default class SendToMessenger extends BaseWidget<SendToMessengerData> {
     this.on(EventName.rendered, origin[EventName.rendered]);
 
     // 发送消息之后，状态位赋值
-    this.on('click', () => this.sent = true);
+    this.on('click', () => (this.sent = true));
     // 如果包含有信息，则渲染完成之后发送完整信息
     this.on('rendered', () => {
       const { message } = this;
 
       if (message) {
-        post('tr/', message).then(() => this.sent = true);
+        post('tr/', message).then(() => (this.sent = true));
       }
     });
   }
@@ -198,31 +244,34 @@ export default class SendToMessenger extends BaseWidget<SendToMessengerData> {
 
     // 绑定事件
     if (!alreadyRender) {
-      window.FB.Event.subscribe('send_to_messenger', (ev: SendToMessengerEvent) => {
-        if (!ev.ref) {
-          warn(`Can not found 'ref' attrubite in this '${this.name}' Plugin`, true);
-          return;
-        }
+      window.FB.Event.subscribe(
+        'send_to_messenger',
+        (ev: SendToMessengerEvent) => {
+          if (!ev.ref) {
+            warn(
+              `Can not found 'ref' attrubite in this '${this.name}' Plugin`,
+              true
+            );
+            return;
+          }
 
-        if (ev.ref !== this.ref) {
-          return;
-        }
+          if (ev.ref !== this.ref) {
+            return;
+          }
 
-        if (ev.event === 'rendered' && !this.isRendered) {
-          log(`${this.name} Plugin with ID ${this.id} has been rendered`);
-          this.isRendered = true;
-          this.emit(EventName.rendered);
+          if (ev.event === 'rendered' && !this.isRendered) {
+            log(`${this.name} Plugin with ID ${this.id} has been rendered`);
+            this.isRendered = true;
+            this.emit(EventName.rendered);
+          } else if (ev.event === 'clicked') {
+            this.emit(EventName.click);
+          } else if (ev.event === 'not_you') {
+            this.emit(EventName.notYou);
+          } else if (ev.event === 'opt_in') {
+            this.emit(EventName.login);
+          }
         }
-        else if (ev.event === 'clicked') {
-          this.emit(EventName.click);
-        }
-        else if (ev.event === 'not_you') {
-          this.emit(EventName.notYou);
-        }
-        else if (ev.event === 'opt_in') {
-          this.emit(EventName.login);
-        }
-      });
+      );
     }
   }
   /** 当前插件附带的数据转换为标准格式 */
@@ -241,11 +290,9 @@ export default class SendToMessenger extends BaseWidget<SendToMessengerData> {
       if (!data) {
         return;
       }
-    }
-    else if (isObject(message)) {
+    } else if (isObject(message)) {
       data = message;
-    }
-    else {
+    } else {
       return;
     }
 
