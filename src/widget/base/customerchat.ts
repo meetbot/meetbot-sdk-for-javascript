@@ -120,7 +120,7 @@ export default class Customerchat extends BaseWidget<CustomerchatData> {
             gateway: 'engagement',
             code: this.code,
             psid: '{{fb_user_id}}',
-            product_link: decodeURIComponent(window.location.href), // 添加商品详情页网址
+            product_link: decodeURIComponent(window.location.href).replace(/[\.-]/g, '_'), // 添加商品详情页网址
           })
         ),
     });
