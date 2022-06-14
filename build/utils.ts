@@ -45,7 +45,7 @@ function getCommand() {
   /** 参数数组 */
   const args = process.argv.slice(2);
   /** 默认模式 */
-  const defaultMode = (result.mode === 'development') ? 'uat' : 'prod';
+  const defaultMode = result.mode === 'development' ? 'uat' : 'prod';
 
   let entry = '';
 
@@ -53,8 +53,7 @@ function getCommand() {
   if (/(uat|prod)/.test(args[0])) {
     entry = args[1];
     result.env = args[0] as EnvType;
-  }
-  else {
+  } else {
     entry = args[0];
     result.env = defaultMode;
   }
@@ -64,11 +63,11 @@ function getCommand() {
     result.name = entry[0].toUpperCase() + entry.substring(1);
     result.input = resolve('src/special', entry, 'index.ts');
     result.output = path.join('special', `${entry}.js`);
-  }
-  else {
+  } else {
     result.name = 'Main';
     result.input = resolve('src/init/index.ts');
-    result.output = result.mode === 'development' ? 'sdk.js' : `sdk-${version}.js`;
+    result.output =
+      result.mode === 'development' ? 'sdk.js' : `sdk-${version}.js`;
   }
 
   if (!/(uat)|(prod)/.test(result.env)) {

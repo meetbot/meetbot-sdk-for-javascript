@@ -155,6 +155,7 @@ export default class SendToMessenger extends BaseWidget<SendToMessengerData> {
     let all_data = {
       ...data,
       product_link: window.location.href, // 添加商品详情页网址
+      fb_user_ref: this.customer_user_ref // 砍价需要
     };
 
     if (

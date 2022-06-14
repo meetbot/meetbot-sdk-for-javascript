@@ -48,18 +48,46 @@ function getSelectedVariantId() {
 }
 
 /** 获取添加购物车按钮 */
-function getAddToCartBtn() {
+function getAddToCartBtn1() {
   const form = getProductForm();
+  let addToCart = null;
 
   if (form) {
-    const addToCart = form.querySelector(
-      'input[type=submit], button[name=add], button[type=submit], button[data-action="add-to-cart"], button[class*="added-to-cart"], button[class*="add_to_cart"], button[class*="cart"]'
+    addToCart = form.querySelector(
+      'button[data-action="add-to-cart"], button[class*="added-to-cart"], button[class*="add_to_cart"], button[class*="cart"], input[type=submit], button[name=add], button[type=submit]'
     );
-
-    if (addToCart) {
-      return addToCart;
+    if (
+      window.location.host === 'sino-sample-store1.myshopify.com' ||
+      window.location.host === 'www.sakerwerkzeuge.de' ||
+      window.location.host === 'cfa-cfa-cfa.com'
+    ) {
+      addToCart = form.querySelector('button[type="submit"][name="add"]');
     }
   }
+  //完美日记
+  if (window.location.host === 'detail.tmall.com') {
+    addToCart = document.querySelector('.tb-btn-basket');
+  }
+
+  return addToCart;
+}
+
+function getAddToCartBtn() {
+  const host = window.location.host;
+  let addToCart = null;
+  //完美日记
+  if (host === 'detail.tmall.com') {
+    addToCart = document.querySelector('.tb-btn-basket');
+  } else if (host === 'www.kellikelly.com') {
+    addToCart = document.querySelector(
+      'button[type="submit"][name="add"], input[type="submit"][name="add"], button[type="submit"]'
+    );
+  } else {
+    addToCart = document.querySelector(
+      'button[type="submit"][name="add"], input[type="submit"][name="add"]'
+    );
+  }
+  return addToCart;
 }
 
 /** 将 DOM 插入至 “加入购物车按钮” 后 */
@@ -83,7 +111,14 @@ function insertDomAfterCart(html: (width: number) => string) {
   // 元素本身
   const dom = wrapper.firstElementChild!;
   // 插入元素
-  btn.parentElement!.insertBefore(dom, btn.nextElementSibling);
+  if (window.location.host === 'www.kellikelly.com') {
+    btn.parentElement!.parentElement!.insertBefore(
+      dom,
+      btn.parentElement!.nextElementSibling
+    );
+  } else {
+    btn.parentElement!.insertBefore(dom, btn.nextElementSibling);
+  }
 
   return dom;
 }
@@ -256,7 +291,7 @@ export function initAddToCard() {
       custom_user_id: customer_user_id,
     };
     var jsonStrRef = JSON.stringify(ref);
-    console.log('checkbox data', app_id, page_id, user_ref, ref);
+    // console.log('checkbox data', app_id, page_id, user_ref, ref);
     window.FB.AppEvents.logEvent('MessengerCheckboxUserConfirmation', null, {
       app_id: app_id,
       page_id: page_id,

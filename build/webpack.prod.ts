@@ -27,13 +27,11 @@ baseConfig.optimization.minimizer.push(
         comments: /^!/,
       },
     },
-  }),
+  })
 );
 
 // 包分析
-baseConfig.plugins!.push(
-  new BundleAnalyzerPlugin(),
-);
+baseConfig.plugins!.push(new BundleAnalyzerPlugin());
 
 baseConfig.performance = {
   hints: false,
@@ -49,14 +47,16 @@ webpack(baseConfig, (err, stats) => {
 
   console.log('\x1Bc');
 
-  console.log(stats.toString({
-    chunks: false,
-    chunkModules: false,
-    chunkOrigins: false,
-    colors: true,
-    modules: false,
-    children: false,
-  }));
+  console.log(
+    stats.toString({
+      chunks: false,
+      chunkModules: false,
+      chunkOrigins: false,
+      colors: true,
+      modules: false,
+      children: false,
+    })
+  );
 
   console.log(chalk.cyan('\n  Build complete.\n'));
 });

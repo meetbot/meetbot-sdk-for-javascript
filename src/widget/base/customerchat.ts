@@ -125,7 +125,7 @@ export default class Customerchat extends BaseWidget<CustomerchatData> {
         ),
     });
 
-    window.FB..parse(undefined, () => {
+    window.FB.XFBML.parse(undefined, () => {
       log(`${this.name} Plugin with ID ${this.id} has been rendered`);
 
       this.isRendered = true;

@@ -25,7 +25,8 @@ export const uat: Environment = {
 };
 
 export const prod: Environment = {
-  messenger_app_id: process.env.APP_NODE_ENV === 'production' ? 418557695509853 : 477171043003051,
+  // messenger_app_id: process.env.APP_NODE_ENV === 'production' ? 418557695509853 : 477171043003051,
+  messenger_app_id: 477171043003051,
   api_server: 'https://t.meetbot.biz/',
   sdk_href: 'https://meetbot.oss-cn-hongkong.aliyuncs.com/sdk/sdk-2-latest.js',
   storage: {

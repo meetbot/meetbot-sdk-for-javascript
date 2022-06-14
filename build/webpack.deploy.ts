@@ -102,17 +102,17 @@ function multipartUpload(client: OSS, dirName: string, truefile: string): Promis
 
 // 主流程
 async function main() {
-  if (!process.env.ossKey || !process.env.ossSecret) {
-    console.log(chalk.cyan('\nossKey or ossSecret is empty.'));
-    console.log(chalk.cyan('Deploy failed.\n'));
-    return;
-  }
-  const client = new OSS({
-    region: 'oss-cn-hongkong',
-    accessKeyId: process.env.ossKey || '',
-    accessKeySecret: process.env.ossSecret || '',
-    bucket: 'meetbot',
-  });
+  // if (!process.env.ossKey || !process.env.ossSecret) {
+  //   console.log(chalk.cyan('\nossKey or ossSecret is empty.'));
+  //   console.log(chalk.cyan('Deploy failed.\n'));
+  //   return;
+  // }
+  // const client = new OSS({
+  //   region: 'oss-cn-hongkong',
+  //   accessKeyId: process.env.ossKey || '',
+  //   accessKeySecret: process.env.ossSecret || '',
+  //   bucket: 'meetbot',
+  // });
   
   const files: [string, string][] = [[resolve('src/init/index.ts'), join('', `sdk-${version}.js`)]];
   readdirSync(resolve('src/special')).forEach((file) => files.push([
@@ -128,9 +128,9 @@ async function main() {
     const dirName = `sdk/${node_env}/` + baseConfig.output!.filename;
     const truefile = baseConfig.output!.path + '/' + baseConfig.output!.filename;
 
-    isExistObject(client, dirName);
+    // isExistObject(client, dirName);
 
-    await multipartUpload(client, dirName, truefile);
+    // await multipartUpload(client, dirName, truefile);
   }
   console.log(chalk.cyan('\nDeploy complete.\n'));
 }

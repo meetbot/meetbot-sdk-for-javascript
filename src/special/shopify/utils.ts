@@ -22,9 +22,8 @@ export function getCustomUserId() {
     Cookie.remove('_shopify_sa_p');
 
     shopifyId = id;
-  }
-  else {
-    shopifyId = local.get(key) || `shopify-${uuid()}`
+  } else {
+    shopifyId = local.get(key) || `shopify-${uuid()}`;
   }
 
   local.set(key, shopifyId);
@@ -36,8 +35,7 @@ export function getCustomUserId() {
 export function fixUrl(url: string) {
   if (/^\/\//.test(url)) {
     return 'https:' + url;
-  }
-  else {
+  } else {
     return url;
   }
 }
@@ -74,8 +72,7 @@ const AssertMap: AnyObject<() => Partial<ShopifyConfig>> = {
         recall: undefined,
         recipt: undefined,
       };
-    }
-    else {
+    } else {
       return {};
     }
   },
@@ -84,7 +81,9 @@ const AssertMap: AnyObject<() => Partial<ShopifyConfig>> = {
 /** 获取当前插件参数 */
 function getShopifyParams(): ShopifyConfig {
   // const script = document.getElementById('meetbot-sdk-cartsbot') as HTMLScriptElement;
-  const script = document.getElementById('bothub-sdk-cartsbot') as HTMLScriptElement;
+  const script = document.getElementById(
+    'bothub-sdk-cartsbot'
+  ) as HTMLScriptElement;
   const dataRef = script.getAttribute('data-config');
 
   if (!dataRef) {
@@ -99,12 +98,10 @@ function getShopifyParams(): ShopifyConfig {
         ...data,
         ...AssertMap[window.location.hostname](),
       };
-    }
-    else {
+    } else {
       return data;
     }
-  }
-  catch (e) {
+  } catch (e) {
     console.warn('(Meetbot SDK Shopify) ' + e.message);
     return { shop_id: 0 };
   }
